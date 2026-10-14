@@ -15,6 +15,7 @@ from backend.app.models.schemas import (
     ProposalDecisionEnum,
     SeverityEnum,
 )
+from backend.app.services.storage import get_public_url
 
 logger = logging.getLogger(__name__)
 
@@ -27,8 +28,8 @@ def encode_image_base64(image_path: str) -> str:
 
 class GemmaAnalyzer:
     """
-    Multimodal Gemma integration client with strict structured output parsing
-    and deterministic fixture-mode fallback.
+    Multimodal Gemma integration client with strict structured output parsing,
+    explicit degraded-state handling, and deterministic fixture-mode fallback.
     """
 
     def __init__(
@@ -77,6 +78,8 @@ class GemmaAnalyzer:
         Produces realistic, deterministically grounded change proposals for fixture mode.
         """
         prop_id = f"prop_{uuid.uuid4().hex[:8]}"
+        co_url = get_public_url(checkout_crop_path)
+        ci_url = get_public_url(checkin_crop_path)
 
         # Determine likely condition based on view and crop index
         if view == CaptureViewEnum.ACCESSORIES:
@@ -113,11 +116,13 @@ class GemmaAnalyzer:
             bounding_box=bbox,
             checkout_crop_path=checkout_crop_path,
             checkin_crop_path=checkin_crop_path,
+            checkout_crop_url=co_url,
+            checkin_crop_url=ci_url,
             condition_type=cond,
             severity=sev,
             confidence=conf,
             description=desc,
-            model_rationale=f"[{self.model_name}] {rationale}",
+            model_rationale=f"[{self.model_name} (Fixture)] {rationale}",
             operator_decision=ProposalDecisionEnum.PENDING,
         )
 
@@ -133,7 +138,12 @@ class GemmaAnalyzer:
     ) -> ChangeProposal:
         """
         Inspects aligned before/after crops using multimodal Gemma or deterministic fixture.
+        In local mode, if Ollama is unreachable, returns an explicit degraded state
+        rather than fabricating a fixture proposal.
         """
+        co_url = get_public_url(checkout_crop_path)
+        ci_url = get_public_url(checkin_crop_path)
+
         if self.app_mode == AppMode.FIXTURE:
             return self._generate_fixture_proposal(
                 inspection_id, view, bbox, checkout_crop_path, checkin_crop_path, index
@@ -199,6 +209,8 @@ class GemmaAnalyzer:
                         bounding_box=bbox,
                         checkout_crop_path=checkout_crop_path,
                         checkin_crop_path=checkin_crop_path,
+                        checkout_crop_url=co_url,
+                        checkin_crop_url=ci_url,
                         condition_type=cond,
                         severity=sev,
                         confidence=conf,
@@ -211,15 +223,24 @@ class GemmaAnalyzer:
 
         except Exception as e:
             logger.warning(
-                "Local Gemma multimodal call failed, falling back to deterministic visual analysis: %s",
+                "Local Gemma multimodal call failed, transitioning to degraded state: %s",
                 e,
             )
 
-        # Fallback if local model is offline or timed out
-        fallback_prop = self._generate_fixture_proposal(
-            inspection_id, view, bbox, checkout_crop_path, checkin_crop_path, index
+        # Honest degraded state in local mode: Do NOT pretend model answered
+        return ChangeProposal(
+            id=f"prop_{uuid.uuid4().hex[:8]}",
+            inspection_id=inspection_id,
+            capture_view=view,
+            bounding_box=bbox,
+            checkout_crop_path=checkout_crop_path,
+            checkin_crop_path=checkin_crop_path,
+            checkout_crop_url=co_url,
+            checkin_crop_url=ci_url,
+            condition_type=ConditionTypeEnum.UNKNOWN,
+            severity=SeverityEnum.NONE,
+            confidence=0.0,
+            description="Visual difference identified by OpenCV alignment engine. Local Gemma 3 model offline.",
+            model_rationale=f"[DEGRADED - {self.model_name} OFFLINE] Multimodal endpoint unavailable. Operator manual decision required.",
+            operator_decision=ProposalDecisionEnum.PENDING,
         )
-        fallback_prop.model_rationale = (
-            f"[CV Fallback - {self.model_name} Offline] Luminance gradient variance candidate."
-        )
-        return fallback_prop

@@ -82,6 +82,28 @@ export async function fetchManifest(inspectionId: string): Promise<ExportManifes
   return res.json();
 }
 
+export async function uploadMedia(
+  inspectionId: string,
+  file: File,
+  captureView: string,
+  isCheckout: boolean
+): Promise<any> {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("capture_view", captureView);
+  formData.append("is_checkout", String(isCheckout));
+
+  const res = await fetch(`${API_BASE}/inspections/${inspectionId}/media`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Upload failed (${res.status}): ${errText}`);
+  }
+  return res.json();
+}
+
 export function getReportHtmlUrl(inspectionId: string): string {
   return `/api/v1/reports/${inspectionId}/html`;
 }

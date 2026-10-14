@@ -56,4 +56,6 @@ Thumbs.db
 # Local media uploads cache (fixtures are kept in data/fixtures)
 uploads/
 *.sqlite3-journal
+*.db
+*.sqlite
 data/local_cache/

@@ -11,11 +11,20 @@ def ensure_fixture_images(output_dir: str = "data/fixtures") -> dict:
     """
     os.makedirs(output_dir, exist_ok=True)
 
+    fx3_front_checkout = os.path.join(output_dir, "fx3_front_checkout.jpg")
+    fx3_front_checkin = os.path.join(output_dir, "fx3_front_checkin.jpg")
+    fx3_acc_checkout = os.path.join(output_dir, "fx3_accessories_checkout.jpg")
+    fx3_acc_checkin = os.path.join(output_dir, "fx3_accessories_checkin.jpg")
+
     paths = {
-        "fx3_front_checkout": os.path.join(output_dir, "fx3_front_checkout.jpg"),
-        "fx3_front_checkin": os.path.join(output_dir, "fx3_front_checkin.jpg"),
-        "fx3_acc_checkout": os.path.join(output_dir, "fx3_accessories_checkout.jpg"),
-        "fx3_acc_checkin": os.path.join(output_dir, "fx3_accessories_checkin.jpg"),
+        "front_checkout": fx3_front_checkout,
+        "front_checkin": fx3_front_checkin,
+        "accessories_checkout": fx3_acc_checkout,
+        "accessories_checkin": fx3_acc_checkin,
+        "fx3_front_checkout": fx3_front_checkout,
+        "fx3_front_checkin": fx3_front_checkin,
+        "fx3_acc_checkout": fx3_acc_checkout,
+        "fx3_acc_checkin": fx3_acc_checkin,
     }
 
     # 1. FRONT VIEW: Checkout (Pristine Camera Body on Stone Mat)

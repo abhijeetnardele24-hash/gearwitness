@@ -7,10 +7,52 @@ on:
     branches: [ main ]
 
 jobs:
-  backend-quality-gates:
+  frontend-build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Oxlint Frontend Lint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Vitest Frontend Unit & Component Tests
+        working-directory: frontend
+        run: npm run test
+
+      - name: Vite TypeScript Build
+        working-directory: frontend
+        run: npm run build
+
+      - name: Archive Frontend Dist Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
+          retention-days: 1
+
+  backend-quality-gates:
+    needs: frontend-build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Frontend Dist Artifact for SPA Testing
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -31,30 +73,6 @@ jobs:
         run: |
           python -m bandit -r backend/app
 
-      - name: Pytest with Coverage Gate (>= 85%)
+      - name: Pytest with Coverage Gate (>= 85%) & SPA Verification
         run: |
           python -m pytest backend/tests --cov=backend/app --cov-report=term-missing --cov-fail-under=85
-
-  frontend-quality-gates:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: "npm"
-          cache-dependency-path: frontend/package.json
-
-      - name: Install dependencies
-        working-directory: frontend
-        run: npm ci
-
-      - name: Oxlint Frontend Lint
-        working-directory: frontend
-        run: npm run lint
-
-      - name: Vite TypeScript Build
-        working-directory: frontend
-        run: npm run build

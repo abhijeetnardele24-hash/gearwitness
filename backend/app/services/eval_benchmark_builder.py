@@ -200,10 +200,9 @@ def build_evaluation_benchmark(
         cv2.imwrite(co_path, img_co)
         cv2.imwrite(ci_path, img_ci)
 
-        # Decoupled Inputs Record (NO GOLD LABELS)
+        # Decoupled Inputs Record (STRICTLY NO GOLD LABELS OR CATEGORY)
         inputs_records.append({
             "case_id": case_id,
-            "category": c["category"],
             "asset_name": c["asset_name"],
             "view": c["view"],
             "checkout_image_path": co_path,

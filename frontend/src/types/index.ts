@@ -38,6 +38,8 @@ export interface ChangeProposal {
   bounding_box: BoundingBox;
   checkout_crop_path?: string;
   checkin_crop_path?: string;
+  checkout_crop_url?: string;
+  checkin_crop_url?: string;
   condition_type: ConditionType;
   severity: Severity;
   confidence: number;
@@ -52,6 +54,7 @@ export interface MediaEvidence {
   id: string;
   filename: string;
   storage_path: string;
+  public_url?: string;
   sha256_hash: string;
   file_size_bytes: number;
   mime_type: string;

@@ -2,7 +2,7 @@
 title: "GearWitness: Privacy-First Local AI Return Inspection for Equipment Rentals"
 published: false
 description: "How we built an air-gapped forensic inspection station for camera and equipment rentals using OpenCV homography, local Gemma 3 multimodal vision, and strict human verification."
-tags: "devchallenge, openweights, ai, python, react"
+tags: "devchallenge, hf26challenge, python, react"
 cover_image: "https://raw.githubusercontent.com/abhijeetnardele24-hash/gearwitness/main/docs/assets/cover_image.png"
 ai_disclosure_level: some_ai
 ---
@@ -151,7 +151,7 @@ We evaluated GearWitness against a decoupled 40-case test suite (`data/benchmark
 
 1. **100% Local Processing:** Customer photos and serial numbers never leave the counter workstation.
 2. **Automated EXIF Sanitization:** GPS coordinates, camera serial numbers, and photographer tags are stripped before saving.
-3. **Cryptographic SHA-256 Manifest:** Generates an immutable, tamper-evident audit record sealing the raw photos, operator decisions, and kit status.
+3. **Content Integrity Digest:** Generates a tamper-evident SHA-256 audit digest sealing the raw photo hashes, bounding box coordinates, operator decisions, and kit verification status.
 4. **Security Scan:** Bandit scan completed with **0 High, 0 Medium, and 0 Low** vulnerabilities.
 
 ![Audit Report Manifest](https://raw.githubusercontent.com/abhijeetnardele24-hash/gearwitness/main/docs/screenshots/audit_report_manifest.png)

@@ -40,14 +40,17 @@ export const CompareCanvas: React.FC<CompareCanvasProps> = ({
     (m) => m.capture_view === activeView && !m.is_checkout
   );
 
-  const getImgSrc = (path?: string) => {
-    if (!path) return "";
+  const getMediaUrl = (media?: typeof checkoutMedia) => {
+    if (!media) return "";
+    if (media.public_url) return media.public_url;
+    const path = media.storage_path;
     if (path.startsWith("http") || path.startsWith("/")) return path;
+    if (path.startsWith("data/fixtures/")) return `/${path.replace("data/", "")}`;
     return `/${path}`;
   };
 
-  const checkoutSrc = getImgSrc(checkoutMedia?.storage_path);
-  const checkinSrc = getImgSrc(checkinMedia?.storage_path);
+  const checkoutSrc = getMediaUrl(checkoutMedia);
+  const checkinSrc = getMediaUrl(checkinMedia);
 
   // Proposals for this view
   const viewProposals = inspection.proposals.filter(
@@ -194,6 +197,11 @@ export const CompareCanvas: React.FC<CompareCanvasProps> = ({
               {/* Proposals Hotspots on Return Image */}
               {viewProposals.map((prop, idx) => {
                 const isSelected = prop.id === selectedProposalId;
+                const xPct = prop.bounding_box.x <= 1.0 ? prop.bounding_box.x * 100 : prop.bounding_box.x;
+                const yPct = prop.bounding_box.y <= 1.0 ? prop.bounding_box.y * 100 : prop.bounding_box.y;
+                const wPct = prop.bounding_box.width <= 1.0 ? prop.bounding_box.width * 100 : prop.bounding_box.width;
+                const hPct = prop.bounding_box.height <= 1.0 ? prop.bounding_box.height * 100 : prop.bounding_box.height;
+
                 return (
                   <button
                     key={prop.id}
@@ -201,10 +209,10 @@ export const CompareCanvas: React.FC<CompareCanvasProps> = ({
                       isSelected ? "selected" : ""
                     }`}
                     style={{
-                      left: `${prop.bounding_box.x}%`,
-                      top: `${prop.bounding_box.y}%`,
-                      width: `${prop.bounding_box.width}%`,
-                      height: `${prop.bounding_box.height}%`,
+                      left: `${xPct}%`,
+                      top: `${yPct}%`,
+                      width: `${wPct}%`,
+                      height: `${hPct}%`,
                     }}
                     onClick={() => onSelectProposal(prop.id)}
                     title={`Proposal #${idx + 1}: ${prop.description} (${prop.operator_decision})`}
@@ -297,6 +305,11 @@ export const CompareCanvas: React.FC<CompareCanvasProps> = ({
                 />
                 {viewProposals.map((prop, idx) => {
                   const isSelected = prop.id === selectedProposalId;
+                  const xPct = prop.bounding_box.x <= 1.0 ? prop.bounding_box.x * 100 : prop.bounding_box.x;
+                  const yPct = prop.bounding_box.y <= 1.0 ? prop.bounding_box.y * 100 : prop.bounding_box.y;
+                  const wPct = prop.bounding_box.width <= 1.0 ? prop.bounding_box.width * 100 : prop.bounding_box.width;
+                  const hPct = prop.bounding_box.height <= 1.0 ? prop.bounding_box.height * 100 : prop.bounding_box.height;
+
                   return (
                     <button
                       key={prop.id}
@@ -304,10 +317,10 @@ export const CompareCanvas: React.FC<CompareCanvasProps> = ({
                         isSelected ? "selected" : ""
                       }`}
                       style={{
-                        left: `${prop.bounding_box.x}%`,
-                        top: `${prop.bounding_box.y}%`,
-                        width: `${prop.bounding_box.width}%`,
-                        height: `${prop.bounding_box.height}%`,
+                        left: `${xPct}%`,
+                        top: `${yPct}%`,
+                        width: `${wPct}%`,
+                        height: `${hPct}%`,
                       }}
                       onClick={() => onSelectProposal(prop.id)}
                       title={`Proposal #${idx + 1}: ${prop.description}`}

@@ -20,6 +20,8 @@ from backend.app.services.gemma_analyzer import GemmaAnalyzer
 from backend.app.services.pipeline import InspectionPipeline
 
 FORBIDDEN_GOLD_FIELDS = {
+    "category",
+    "target_class",
     "has_damage",
     "expected_condition",
     "expected_severity",
@@ -95,10 +97,12 @@ async def run_gearwitness_pipeline_eval(
             kit_checklist=kit_items,
         )
 
+        from backend.app.services.storage import get_public_url
         med_co = MediaEvidence(
             id=f"m_co_{case_id}",
             filename="co.jpg",
             storage_path=co_path,
+            public_url=get_public_url(co_path) or f"/{co_path}",
             sha256_hash="hash_co",
             file_size_bytes=1000,
             mime_type="image/jpeg",
@@ -111,6 +115,7 @@ async def run_gearwitness_pipeline_eval(
             id=f"m_ci_{case_id}",
             filename="ci.jpg",
             storage_path=ci_path,
+            public_url=get_public_url(ci_path) or f"/{ci_path}",
             sha256_hash="hash_ci",
             file_size_bytes=1000,
             mime_type="image/jpeg",
@@ -246,20 +251,29 @@ async def run_full_benchmark(
         gw_preds, gold_path, "GearWitness Hybrid (CV + Gemma)", gw_latency
     )
 
-    # 2. Run Deterministic Baseline (CV Diff Only)
+    # 2. Run Deterministic Baseline (CV Diff Only on Pixels - NO GOLD LABELS)
+    from backend.app.services.vision_alignment import align_and_detect_changes
+
     t0 = time.perf_counter()
     cv_preds = []
     for item in inputs_list:
+        alignment, bboxes = align_and_detect_changes(
+            checkout_path=item["checkout_image_path"],
+            checkin_path=item["checkin_image_path"],
+        )
+        has_pixel_diff = len(bboxes) > 0 and alignment.is_aligned
+        is_missing_acc = item.get("view") == "accessories" and has_pixel_diff
+
         cv_preds.append(
             {
                 "case_id": item["case_id"],
-                "has_detected_damage": (item["category"] not in ("no_change", "occlusion")),
-                "detected_missing_accessory": (item["category"] == "missing_accessory"),
+                "has_detected_damage": has_pixel_diff,
+                "detected_missing_accessory": is_missing_acc,
                 "schema_valid": True,
             }
         )
     cv_latency = ((time.perf_counter() - t0) / len(inputs_list)) * 1000
-    cv_metrics = score_predictions(cv_preds, gold_path, "Deterministic CV Baseline", cv_latency)
+    cv_metrics = score_predictions(cv_preds, gold_path, "Deterministic CV Baseline (Pixels)", cv_latency)
 
     output = {
         "benchmark_title": "GearWitness 40-Case Matched-Pair Return Inspection Benchmark",

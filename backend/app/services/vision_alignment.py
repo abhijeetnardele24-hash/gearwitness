@@ -20,14 +20,24 @@ def load_image_rgb(path: str) -> np.ndarray:
 
 
 def crop_bounding_box(image_path: str, bbox: BoundingBox, output_path: str) -> str:
-    """Extracts a cropped image corresponding to a bounding box and saves to disk."""
+    """Extracts a cropped image corresponding to a normalized (or pixel) bounding box and saves to disk."""
     with Image.open(image_path) as img:
         w, h = img.size
-        # Clamp coordinates safely
-        x1 = max(0, min(bbox.x, w - 1))
-        y1 = max(0, min(bbox.y, h - 1))
-        x2 = max(x1 + 1, min(bbox.x + bbox.width, w))
-        y2 = max(y1 + 1, min(bbox.y + bbox.height, h))
+        if bbox.width <= 1.0 and bbox.height <= 1.0 and w > 1 and h > 1:
+            px = int(bbox.x * w)
+            py = int(bbox.y * h)
+            pw = max(10, int(bbox.width * w))
+            ph = max(10, int(bbox.height * h))
+        else:
+            px = int(bbox.x)
+            py = int(bbox.y)
+            pw = max(10, int(bbox.width))
+            ph = max(10, int(bbox.height))
+
+        x1 = max(0, min(px, w - 1))
+        y1 = max(0, min(py, h - 1))
+        x2 = max(x1 + 10, min(px + pw, w))
+        y2 = max(y1 + 10, min(py + ph, h))
 
         cropped = img.crop((x1, y1, x2, y2))
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -139,7 +149,13 @@ def align_and_detect_changes(
             w_pad = min(w_ref - x_pad, w + 2 * pad)
             h_pad = min(h_ref - y_pad, h + 2 * pad)
 
-            bboxes.append(BoundingBox(x=x_pad, y=y_pad, width=w_pad, height=h_pad))
+            # Store normalized 0.0 to 1.0 coordinates
+            norm_x = round(float(x_pad) / w_ref, 4)
+            norm_y = round(float(y_pad) / h_ref, 4)
+            norm_w = round(float(w_pad) / w_ref, 4)
+            norm_h = round(float(h_pad) / h_ref, 4)
+
+            bboxes.append(BoundingBox(x=norm_x, y=norm_y, width=norm_w, height=norm_h))
 
     # Sort bounding boxes by area descending, take top candidate regions (max 8)
     bboxes = sorted(bboxes, key=lambda b: b.width * b.height, reverse=True)[:8]
@@ -158,15 +174,19 @@ def align_and_detect_changes(
             cv2.cvtColor(img_ref, cv2.COLOR_RGB2BGR), 0.65, heatmap_color, 0.35, 0
         )
 
-        # Draw numbered bounding boxes on heatmap
+        # Draw numbered bounding boxes on heatmap using denormalized pixel coords
         for i, box in enumerate(bboxes, start=1):
+            px_x = int(box.x * w_ref)
+            px_y = int(box.y * h_ref)
+            px_w = int(box.width * w_ref)
+            px_h = int(box.height * h_ref)
             cv2.rectangle(
-                blend, (box.x, box.y), (box.x + box.width, box.y + box.height), (0, 165, 255), 2
+                blend, (px_x, px_y), (px_x + px_w, px_y + px_h), (0, 165, 255), 2
             )
             cv2.putText(
                 blend,
                 f"#{i}",
-                (box.x + 4, box.y + 20),
+                (px_x + 4, max(20, px_y + 20)),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.6,
                 (0, 165, 255),

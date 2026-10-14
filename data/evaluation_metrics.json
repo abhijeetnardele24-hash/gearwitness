@@ -1,25 +1,25 @@
 {
   "benchmark_title": "GearWitness 40-Case Matched-Pair Return Inspection Benchmark",
   "sample_count": 40,
-  "evaluated_at": "2026-10-14T19:40:20.599792+00:00",
+  "evaluated_at": "2026-10-14T20:14:43.178420+00:00",
   "app_mode": "fixture",
-  "model_name": "gemma2:9b",
+  "model_name": "gemma3:4b",
   "note": "Physical decoupling: prediction code has zero access to gold labels.",
   "results": [
     {
-      "system_name": "Deterministic CV Baseline",
+      "system_name": "Deterministic CV Baseline (Pixels)",
       "sample_count": 40,
       "schema_validity_pct": 100.0,
-      "proposed_region_precision": 0.923,
+      "proposed_region_precision": 0.649,
       "proposed_region_recall": 1.0,
-      "proposed_region_f1": 0.96,
-      "no_change_false_positive_rate": 0.0,
+      "proposed_region_f1": 0.787,
+      "no_change_false_positive_rate": 0.7,
       "missing_accessory_accuracy": 1.0,
       "true_positives": 24,
-      "false_positives": 2,
+      "false_positives": 13,
       "false_negatives": 0,
-      "true_negatives": 14,
-      "measured_latency_ms": 0.0
+      "true_negatives": 3,
+      "measured_latency_ms": 14.15
     },
     {
       "system_name": "GearWitness Hybrid (CV + Gemma)",
@@ -34,7 +34,7 @@
       "false_positives": 13,
       "false_negatives": 0,
       "true_negatives": 3,
-      "measured_latency_ms": 92.03
+      "measured_latency_ms": 68.85
     }
   ]
 }

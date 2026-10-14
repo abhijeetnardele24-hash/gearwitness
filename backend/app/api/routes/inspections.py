@@ -7,7 +7,6 @@ from backend.app.models.schemas import (
     CaptureViewEnum,
     Inspection,
     InspectionCreate,
-    InspectionStatusEnum,
     MediaEvidence,
 )
 from backend.app.services.pipeline import InspectionPipeline
@@ -40,16 +39,12 @@ def create_inspection(payload: InspectionCreate):
         raise HTTPException(status_code=400, detail=str(err)) from err
 
 
-@router.post("/{inspection_id}/upload", response_model=MediaEvidence)
-async def upload_inspection_media(
+async def _handle_media_upload(
     inspection_id: str,
-    file: UploadFile = File(...),
-    capture_view: CaptureViewEnum = Form(...),
-    is_checkout: bool = Form(...),
-):
-    """
-    Safely ingests, validates, strips EXIF, and records a checkout or checkin photo.
-    """
+    file: UploadFile,
+    capture_view: CaptureViewEnum,
+    is_checkout: bool,
+) -> MediaEvidence:
     insp = repo.get_inspection(inspection_id)
     if not insp:
         raise HTTPException(status_code=404, detail="Inspection not found")
@@ -62,21 +57,42 @@ async def upload_inspection_media(
             capture_view=capture_view,
             is_checkout=is_checkout,
         )
-        insp.media.append(media)
-        if is_checkout and insp.status == InspectionStatusEnum.CREATED:
-            insp.status = InspectionStatusEnum.CHECKOUT_CAPTURED
-        elif not is_checkout:
-            insp.status = InspectionStatusEnum.CHECKIN_CAPTURED
-
+        # Persist to SQLite
+        updated = repo.add_media_to_inspection(inspection_id, media)
+        if not updated:
+            raise HTTPException(status_code=500, detail="Failed to record uploaded media")
         return media
     except InvalidMediaError as err:
         raise HTTPException(status_code=400, detail=str(err)) from err
+
+
+@router.post("/{inspection_id}/upload", response_model=MediaEvidence)
+async def upload_inspection_media_route1(
+    inspection_id: str,
+    file: UploadFile = File(...),
+    capture_view: CaptureViewEnum = Form(...),
+    is_checkout: bool = Form(...),
+):
+    """Safely ingests, validates, strips EXIF, and records a checkout or checkin photo."""
+    return await _handle_media_upload(inspection_id, file, capture_view, is_checkout)
+
+
+@router.post("/{inspection_id}/media", response_model=MediaEvidence)
+async def upload_inspection_media_route2(
+    inspection_id: str,
+    file: UploadFile = File(...),
+    capture_view: CaptureViewEnum = Form(...),
+    is_checkout: bool = Form(...),
+):
+    """Alias for /upload to match media collection semantics."""
+    return await _handle_media_upload(inspection_id, file, capture_view, is_checkout)
 
 
 @router.post("/{inspection_id}/analyze", response_model=Inspection)
 async def analyze_inspection(inspection_id: str):
     """
     Triggers OpenCV geometric alignment and local Gemma candidate proposal extraction.
+    Persists proposals and kit updates to database and returns complete updated Inspection.
     """
     insp = repo.get_inspection(inspection_id)
     if not insp:
@@ -84,12 +100,19 @@ async def analyze_inspection(inspection_id: str):
 
     pipeline = InspectionPipeline()
 
+    all_proposals = []
     # Find matched pairs (same capture_view, one checkout, one checkin)
     views = {m.capture_view for m in insp.media}
     for v in views:
         co = next((m for m in insp.media if m.capture_view == v and m.is_checkout), None)
         ci = next((m for m in insp.media if m.capture_view == v and not m.is_checkout), None)
         if co and ci:
-            await pipeline.process_view_pair(insp, co, ci)
+            alignment, proposals = await pipeline.process_view_pair(insp, co, ci)
+            all_proposals.extend(proposals)
 
-    return insp
+    # Persist all proposals to SQLite
+    if all_proposals:
+        repo.set_inspection_proposals(inspection_id, all_proposals)
+
+    # Return freshly queried inspection
+    return repo.get_inspection(inspection_id)

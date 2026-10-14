@@ -32,7 +32,8 @@ def test_crop_bounding_box(tmp_path):
     cv2.imwrite(p, img)
 
     out = str(tmp_path / "crop.jpg")
-    bbox = BoundingBox(x=10, y=20, width=50, height=60)
+    # Normalized coordinates on 200x200 image: 0.25 * 200 = 50 width, 0.30 * 200 = 60 height
+    bbox = BoundingBox(x=0.05, y=0.10, width=0.25, height=0.30)
     res_path = crop_bounding_box(p, bbox, out)
 
     assert os.path.exists(res_path)

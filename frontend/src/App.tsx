@@ -236,8 +236,15 @@ export const App: React.FC = () => {
       />
 
       <GuidedCaptureModal
+        inspectionId={currentInspection.id}
         isOpen={isCaptureOpen}
         onClose={() => setIsCaptureOpen(false)}
+        onInspectionUpdated={(updated) => {
+          setCurrentInspection(updated);
+          setInspections((prev) =>
+            prev.map((i) => (i.id === updated.id ? updated : i))
+          );
+        }}
       />
     </div>
   );

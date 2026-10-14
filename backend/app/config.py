@@ -31,7 +31,8 @@ class Settings(BaseSettings):
 
     # Open AI / Local Gemma Settings
     OLLAMA_BASE_URL: str = "http://localhost:11434"
-    GEMMA_MODEL_NAME: str = "gemma2:9b"
+    GEMMA_MODEL_NAME: str = "gemma3:4b"
+    OLLAMA_MIN_VERSION: str = "0.5.0"
     MODEL_TIMEOUT_SECONDS: int = 45
 
 
@@ -39,7 +40,7 @@ settings = Settings(
     APP_MODE=AppMode(os.getenv("APP_MODE", "fixture")),
     HOST=os.getenv("HOST", "127.0.0.1"),
     OLLAMA_BASE_URL=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
-    GEMMA_MODEL_NAME=os.getenv("GEMMA_MODEL_NAME", "gemma2:9b"),
+    GEMMA_MODEL_NAME=os.getenv("GEMMA_MODEL_NAME", "gemma3:4b"),
     DATABASE_URL=os.getenv("DATABASE_URL", "sqlite:///./gearwitness.db"),
     UPLOAD_DIR=os.getenv("UPLOAD_DIR", "./uploads"),
 )

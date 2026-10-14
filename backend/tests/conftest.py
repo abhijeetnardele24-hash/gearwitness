@@ -14,7 +14,11 @@ def client():
 @pytest.fixture
 def reset_repo():
     """Resets repository data before test execution."""
-    repo.assets.clear()
-    repo.inspections.clear()
-    repo._seed_default_data()
+    with repo._get_connection() as conn:
+        conn.execute("DELETE FROM kit_items")
+        conn.execute("DELETE FROM proposals")
+        conn.execute("DELETE FROM media")
+        conn.execute("DELETE FROM inspections")
+        conn.execute("DELETE FROM assets")
+        repo._seed_default_data(conn)
     return repo

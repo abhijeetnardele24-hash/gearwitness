@@ -124,7 +124,7 @@ To prevent data leaks and protect customer privacy:
 
 ## 6. Cryptographic Manifest & Audit Seal
 
-Upon operator review completion, GearWitness constructs an immutable JSON audit manifest:
+Upon operator review completion, GearWitness constructs a tamper-evident Content Integrity Digest JSON audit manifest:
 
 ```json
 {

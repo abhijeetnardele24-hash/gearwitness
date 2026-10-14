@@ -24,9 +24,11 @@ export const EvidenceTray: React.FC<EvidenceTrayProps> = ({
     return p.operator_decision === filter;
   });
 
-  const getImgSrc = (path?: string) => {
+  const getImgSrc = (url?: string, path?: string) => {
+    if (url) return url;
     if (!path) return "";
     if (path.startsWith("http") || path.startsWith("/")) return path;
+    if (path.startsWith("data/fixtures/")) return `/${path.replace("data/", "")}`;
     return `/${path}`;
   };
 
@@ -131,23 +133,23 @@ export const EvidenceTray: React.FC<EvidenceTrayProps> = ({
                   </div>
 
                   {/* Crop previews (if available) */}
-                  {(prop.checkout_crop_path || prop.checkin_crop_path) && (
+                  {(prop.checkout_crop_url || prop.checkout_crop_path || prop.checkin_crop_url || prop.checkin_crop_path) && (
                     <div className="crop-previews">
-                      {prop.checkout_crop_path && (
+                      {(prop.checkout_crop_url || prop.checkout_crop_path) && (
                         <div className="crop-item">
                           <span className="crop-label">Baseline</span>
                           <img
-                            src={getImgSrc(prop.checkout_crop_path)}
+                            src={getImgSrc(prop.checkout_crop_url, prop.checkout_crop_path)}
                             alt="Baseline crop"
                             className="crop-img"
                           />
                         </div>
                       )}
-                      {prop.checkin_crop_path && (
+                      {(prop.checkin_crop_url || prop.checkin_crop_path) && (
                         <div className="crop-item">
                           <span className="crop-label">Return</span>
                           <img
-                            src={getImgSrc(prop.checkin_crop_path)}
+                            src={getImgSrc(prop.checkin_crop_url, prop.checkin_crop_path)}
                             alt="Return crop"
                             className="crop-img"
                           />

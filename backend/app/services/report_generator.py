@@ -71,11 +71,13 @@ def generate_export_manifest(inspection: Inspection) -> ExportManifest:
         disclaimer=DISCLAIMER_TEXT,
     )
 
-    # Compute deterministic SHA-256 of manifest fields
+    # Compute deterministic SHA-256 content integrity digest of manifest fields
     canonical_json = json.dumps(
-        manifest.model_dump(exclude={"manifest_hash_sha256"}), sort_keys=True
+        manifest.model_dump(exclude={"manifest_hash_sha256", "manifest_digest_sha256"}), sort_keys=True
     )
-    manifest.manifest_hash_sha256 = hashlib.sha256(canonical_json.encode("utf-8")).hexdigest()
+    digest = hashlib.sha256(canonical_json.encode("utf-8")).hexdigest()
+    manifest.manifest_digest_sha256 = digest
+    manifest.manifest_hash_sha256 = digest
     return manifest
 
 
