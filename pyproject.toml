@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gearwitness"
+version = "0.1.0"
+description = "Local AI evidence for fair equipment returns"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Abhijeet Nardele", email = "abhijeet@example.com" }
+]
+license = { text = "Apache-2.0" }
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.1.0",
+    "sqlalchemy>=2.0.25",
+    "opencv-python-headless>=4.8.0.76",
+    "pillow>=10.2.0",
+    "numpy>=1.26.0",
+    "httpx>=0.26.0",
+    "python-multipart>=0.0.6",
+    "reportlab>=4.0.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.2.0",
+    "bandit>=1.7.7",
+    "pypdf>=4.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+asyncio_mode = "auto"
+addopts = "-v --cov=backend/app --cov-report=term-missing --cov-fail-under=85"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "B", "C4"]
+ignore = ["E501", "B008"]
+
+[tool.bandit]
+targets = ["backend/app"]
+skips = ["B101"]

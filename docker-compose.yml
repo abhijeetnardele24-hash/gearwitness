@@ -1,0 +1,14 @@
+services:
+  gearwitness:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_MODE=fixture
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      - ./backend/data/media:/app/backend/data/media
+    restart: unless-stopped

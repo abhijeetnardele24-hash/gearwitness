@@ -1,0 +1,40 @@
+{"case_id": "gw_eval_01", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_02", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_03", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_04", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_05", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_06", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_07", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_08", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_09", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_10", "category": "no_change", "has_damage": false, "expected_condition": "none", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_11", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scratch", "expected_severity": "minor", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_12", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scratch", "expected_severity": "minor", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_13", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scratch", "expected_severity": "minor", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_14", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scratch", "expected_severity": "minor", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_15", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scratch", "expected_severity": "minor", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_16", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scuff", "expected_severity": "minor", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_17", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scuff", "expected_severity": "moderate", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_18", "category": "scratch_scuff", "has_damage": true, "expected_condition": "scuff", "expected_severity": "moderate", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_19", "category": "dent_crack", "has_damage": true, "expected_condition": "dent", "expected_severity": "moderate", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_20", "category": "dent_crack", "has_damage": true, "expected_condition": "dent", "expected_severity": "moderate", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_21", "category": "dent_crack", "has_damage": true, "expected_condition": "dent", "expected_severity": "moderate", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_22", "category": "dent_crack", "has_damage": true, "expected_condition": "crack", "expected_severity": "moderate", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_23", "category": "dent_crack", "has_damage": true, "expected_condition": "crack", "expected_severity": "severe", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_24", "category": "dent_crack", "has_damage": true, "expected_condition": "crack", "expected_severity": "severe", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_25", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["USB-C 10Gbps Tether Cable"], "is_ambiguous": false}
+{"case_id": "gw_eval_26", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["USB-C 10Gbps Tether Cable"], "is_ambiguous": false}
+{"case_id": "gw_eval_27", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["USB-C 10Gbps Tether Cable"], "is_ambiguous": false}
+{"case_id": "gw_eval_28", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["USB-C 10Gbps Tether Cable"], "is_ambiguous": false}
+{"case_id": "gw_eval_29", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["Fast Charger Station"], "is_ambiguous": false}
+{"case_id": "gw_eval_30", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["Fast Charger Station"], "is_ambiguous": false}
+{"case_id": "gw_eval_31", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["Fast Charger Station"], "is_ambiguous": false}
+{"case_id": "gw_eval_32", "category": "missing_accessory", "has_damage": true, "expected_condition": "missing_accessory", "expected_severity": "moderate", "missing_items": ["Fast Charger Station"], "is_ambiguous": false}
+{"case_id": "gw_eval_33", "category": "occlusion", "has_damage": false, "expected_condition": "artifact_lighting", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_34", "category": "occlusion", "has_damage": false, "expected_condition": "artifact_lighting", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_35", "category": "occlusion", "has_damage": false, "expected_condition": "artifact_lighting", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_36", "category": "occlusion", "has_damage": false, "expected_condition": "artifact_lighting", "expected_severity": "none", "missing_items": [], "is_ambiguous": false}
+{"case_id": "gw_eval_37", "category": "ambiguous", "has_damage": true, "expected_condition": "scratch", "expected_severity": "minor", "missing_items": [], "is_ambiguous": true}
+{"case_id": "gw_eval_38", "category": "ambiguous", "has_damage": false, "expected_condition": "normal_wear", "expected_severity": "none", "missing_items": [], "is_ambiguous": true}
+{"case_id": "gw_eval_39", "category": "ambiguous", "has_damage": true, "expected_condition": "scratch", "expected_severity": "minor", "missing_items": [], "is_ambiguous": true}
+{"case_id": "gw_eval_40", "category": "ambiguous", "has_damage": false, "expected_condition": "normal_wear", "expected_severity": "none", "missing_items": [], "is_ambiguous": true}

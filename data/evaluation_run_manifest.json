@@ -1,0 +1,9 @@
+{
+  "execution_timestamp": "2026-10-14T19:40:20.600796+00:00",
+  "evaluated_code_sha": "ad0bf5f9d9eed06bfd1e110e72d9752f8183958b",
+  "evidence_commit_sha": null,
+  "sample_count": 40,
+  "inputs_checksum_sha256": "df9ed6cd0a50c6e4c5913886e3864842cb9b27a5265f4a432f5ebae604df1e73",
+  "gold_checksum_sha256": "5cd2a06a02a74e4a935b1266f5b04d4dd50b466dc45cc92701950cfc11c9e11e",
+  "provenance_note": "evaluated_code_sha identifies executed code. evidence_commit_sha is intentionally null to avoid self-referential hashing."
+}
