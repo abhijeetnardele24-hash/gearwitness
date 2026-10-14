@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     # Open AI / Local Gemma Settings
     OLLAMA_BASE_URL: str = "http://localhost:11434"
     GEMMA_MODEL_NAME: str = "gemma3:4b"
-    OLLAMA_MIN_VERSION: str = "0.5.0"
+    OLLAMA_MIN_VERSION: str = "0.6.0"
     MODEL_TIMEOUT_SECONDS: int = 45
 
 

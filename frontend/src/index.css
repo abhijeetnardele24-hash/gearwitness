@@ -19,10 +19,10 @@
   --text-muted: #57534e;
   --text-faint: #78716c;
   
-  --teal-primary: #0d9488;
-  --teal-hover: #0f766e;
+  --teal-primary: #0f766e;
+  --teal-hover: #115e59;
   --teal-subtle: #f0fdfa;
-  --teal-border: #99f6e4;
+  --teal-border: #5eead4;
   
   --amber-proposed: #b45309;
   --amber-subtle: #fffbeb;
@@ -32,9 +32,9 @@
   --green-subtle: #f0fdf4;
   --green-border: #bbf7d0;
 
-  --red-error: #dc2626;
+  --red-error: #b91c1c;
   --red-subtle: #fef2f2;
-  --red-border: #fecaca;
+  --red-border: #fca5a5;
   
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -236,10 +236,11 @@ p { margin: 0; }
 .brand-version {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--text-faint);
+  color: #1e293b;
   background: var(--bg-subtle);
   padding: 1px 5px;
   border-radius: var(--radius-xs);
+  font-weight: 600;
 }
 
 .brand-subtitle {
@@ -459,14 +460,15 @@ p { margin: 0; }
 .tally-label {
   font-size: 10px;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: #475569;
+  font-weight: 600;
   letter-spacing: 0.03em;
 }
 
 .tally-item.confirmed .tally-count { color: var(--green-confirmed); }
-.tally-item.dismissed .tally-count { color: var(--text-faint); }
+.tally-item.dismissed .tally-count { color: #475569; }
 .tally-item.uncertain .tally-count { color: var(--amber-proposed); }
-.tally-item.pending .tally-count { color: #d97706; }
+.tally-item.pending .tally-count { color: #b45309; }
 
 .strip-actions {
   display: flex;
@@ -874,8 +876,8 @@ p { margin: 0; }
   border-left: 4px solid var(--green-confirmed);
 }
 .proposal-card.dismissed {
-  border-left: 4px solid var(--text-faint);
-  opacity: 0.75;
+  border-left: 4px solid #64748b;
+  background: #f8fafc;
 }
 .proposal-card.uncertain {
   border-left: 4px solid var(--amber-proposed);
@@ -969,7 +971,7 @@ p { margin: 0; }
 
 .rationale-prefix {
   font-weight: 700;
-  color: var(--teal-hover);
+  color: #0f766e;
   margin-right: 6px;
 }
 
@@ -988,7 +990,8 @@ p { margin: 0; }
 .crop-label {
   font-size: 10px;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: #475569;
+  font-weight: 700;
 }
 
 .crop-img {
@@ -1025,36 +1028,39 @@ p { margin: 0; }
 }
 
 .action-confirm {
-  background: var(--bg-surface);
-  border-color: var(--green-border);
-  color: var(--green-confirmed);
+  background: #f0fdf4;
+  border-color: #15803d;
+  color: #14532d;
+  font-weight: 600;
 }
 .action-confirm:hover, .action-confirm.active {
-  background: var(--green-confirmed);
+  background: #15803d;
   color: #ffffff;
-  border-color: var(--green-confirmed);
+  border-color: #15803d;
 }
 
 .action-dismiss {
-  background: var(--bg-surface);
-  border-color: var(--border-medium);
-  color: var(--text-muted);
+  background: #f8fafc;
+  border-color: #475569;
+  color: #1e293b;
+  font-weight: 600;
 }
 .action-dismiss:hover, .action-dismiss.active {
-  background: var(--text-muted);
+  background: #1e293b;
   color: #ffffff;
-  border-color: var(--text-muted);
+  border-color: #1e293b;
 }
 
 .action-uncertain {
-  background: var(--bg-surface);
-  border-color: var(--amber-border);
-  color: var(--amber-proposed);
+  background: #fffbeb;
+  border-color: #b45309;
+  color: #78350f;
+  font-weight: 600;
 }
 .action-uncertain:hover, .action-uncertain.active {
-  background: var(--amber-proposed);
+  background: #b45309;
   color: #ffffff;
-  border-color: var(--amber-proposed);
+  border-color: #b45309;
 }
 
 /* ==========================================================================
@@ -1138,14 +1144,14 @@ p { margin: 0; }
   font-weight: 700;
 }
 .pill-present {
-  background: var(--green-subtle);
-  color: var(--green-confirmed);
-  border: 1px solid var(--green-border);
+  background: #dcfce7;
+  color: #14532d;
+  border: 1px solid #86efac;
 }
 .pill-missing {
-  background: var(--red-subtle);
-  color: var(--red-error);
-  border: 1px solid var(--red-border);
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
 }
 .pill-pending {
   background: var(--bg-subtle);
