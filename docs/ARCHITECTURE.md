@@ -146,4 +146,4 @@ Upon operator review completion, GearWitness constructs a tamper-evident Content
 }
 ```
 
-This manifest SHA-256 hash is embedded directly in both the generated HTML audit certificate and the vector PDF export, ensuring complete evidentiary integrity for rental shops and customers alike.
+This manifest SHA-256 hash is embedded directly in both the generated HTML inspection report and the vector PDF export, providing a tamper-evident Content Integrity Digest that can be verified against independent storage. *(A SHA-256 digest is tamper-evident only when compared with a trusted previously stored digest; it is not a cryptographic digital signature, timestamp authority, or proof of custody).*

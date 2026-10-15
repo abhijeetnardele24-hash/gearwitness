@@ -29,14 +29,14 @@ def make_eval_chart():
 
     # Right: Decision Safety & Confusion Matrix Breakdown
     ax2.set_facecolor("#ffffff")
-    categories = ["True Positives\n(Detected)", "False Positives\n(Flagged for Review)", "False Negatives\n(Missed Damage)", "Hallucinated\nAuto-Fines"]
-    counts = [24, 13, 0, 0]
-    bar_colors = ["#10b981", "#f59e0b", "#ef4444", "#64748b"]
+    categories = ["True Positives\n(Detected)", "False Positives\n(Flagged for Review)", "False Negatives\n(Missed Damage)", "True Negatives\n(Clean Confirmed)"]
+    counts = [24, 13, 0, 3]
+    bar_colors = ["#10b981", "#f59e0b", "#ef4444", "#0284c7"]
     
     b2 = ax2.bar(categories, counts, color=bar_colors, width=0.55, edgecolor="#e2e8f0", linewidth=1.2, zorder=3)
     ax2.set_ylim(0, 28)
     ax2.set_ylabel("Count (Cases)", fontsize=11, fontweight="bold", color="#1e293b")
-    ax2.set_title("Safety Boundary & Confusion Breakdown", fontsize=13, fontweight="bold", color="#0f172a", pad=15)
+    ax2.set_title("Fixture Benchmark Confusion Breakdown (40 Cases)", fontsize=13, fontweight="bold", color="#0f172a", pad=15)
     ax2.grid(axis="y", linestyle="--", alpha=0.5, zorder=0)
     ax2.tick_params(colors="#475569")
     
@@ -45,8 +45,8 @@ def make_eval_chart():
         ax2.text(bar.get_x() + bar.get_width() / 2, h + 0.5, str(int(h)),
                  ha="center", va="bottom", fontsize=10, fontweight="bold", color="#0f172a")
                  
-    plt.suptitle("GearWitness Verification & Safety Benchmark (40 Synthetic Pairs)",
-                 fontsize=14, fontweight="bold", color="#0f172a", y=0.98)
+    plt.suptitle("GearWitness Synthetic Fixture Benchmark (40 Pairs) — Architectural Invariant: 0 Auto-Charges",
+                 fontsize=13, fontweight="bold", color="#0f172a", y=0.98)
     plt.tight_layout()
     plt.savefig("docs/assets/evaluation_chart.png", dpi=200, bbox_inches="tight")
     plt.close()

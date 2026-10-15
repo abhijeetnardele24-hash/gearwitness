@@ -93,3 +93,49 @@ jobs:
       - name: Playwright E2E & Axe Accessibility Suite
         working-directory: frontend
         run: npx playwright test
+
+  docker-container-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker Image at Submitted Commit
+        run: |
+          docker build -t gearwitness:gate .
+
+      - name: Start Container and Verify Health & Frontend
+        run: |
+          CONTAINER_ID=$(docker run -d -p 8000:8000 -e APP_MODE=fixture -e PORT=8000 gearwitness:gate)
+          echo "CONTAINER_ID=$CONTAINER_ID"
+
+          # Stop and remove container even on failure
+          trap 'echo "Container Logs:"; docker logs "$CONTAINER_ID" || true; docker stop "$CONTAINER_ID" || true; docker rm "$CONTAINER_ID" || true' EXIT
+
+          echo "Waiting for container readiness..."
+          READY=0
+          for i in $(seq 1 30); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/api/v1/health || true)
+            if [ "$STATUS" = "200" ]; then
+              echo "Container health check passed on attempt $i (HTTP 200)"
+              READY=1
+              break
+            fi
+            echo "Attempt $i: status code $STATUS, sleeping 1s..."
+            sleep 1
+          done
+
+          if [ "$READY" -ne 1 ]; then
+            echo "ERROR: Container failed to become healthy within 30s"
+            exit 1
+          fi
+
+          # Assert /api/v1/health returns HTTP 200 with valid status
+          HEALTH_JSON=$(curl -s http://localhost:8000/api/v1/health)
+          echo "Health response: $HEALTH_JSON"
+          echo "$HEALTH_JSON" | grep -q '"status":"ok"'
+
+          # Assert / returns the built frontend
+          FRONTEND_HTML=$(curl -s http://localhost:8000/)
+          echo "$FRONTEND_HTML" | grep -q 'id="root"'
+          echo "Frontend root HTML successfully returned from Docker container"
+

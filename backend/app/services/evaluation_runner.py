@@ -1,13 +1,16 @@
 import asyncio
 import hashlib
 import json
+import logging
 import os
 import subprocess  # nosec B404
 import time
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
-from backend.app.config import settings
+import httpx
+
+from backend.app.config import AppMode, settings
 from backend.app.models.schemas import (
     CaptureViewEnum,
     ConditionTypeEnum,
@@ -18,6 +21,8 @@ from backend.app.models.schemas import (
 from backend.app.services.eval_benchmark_builder import build_evaluation_benchmark
 from backend.app.services.gemma_analyzer import GemmaAnalyzer
 from backend.app.services.pipeline import InspectionPipeline
+
+logger = logging.getLogger(__name__)
 
 FORBIDDEN_GOLD_FIELDS = {
     "category",
@@ -228,9 +233,51 @@ def score_predictions(
     }
 
 
+async def probe_gemma_runtime_status(analyzer: GemmaAnalyzer) -> Tuple[bool, bool, str, str]:
+    """
+    Determines actual execution mode and connectivity.
+    Returns: (endpoint_reachable, live_model_executed, execution_mode, classifier_type)
+    """
+    if analyzer.app_mode == AppMode.FIXTURE:
+        return (
+            False,
+            False,
+            "fixture",
+            "Deterministic Fixture Classifier",
+        )
+
+    # In local mode, probe the actual Ollama endpoint
+    endpoint_reachable = False
+    model_present = False
+    try:
+        async with httpx.AsyncClient(timeout=2.0) as client:
+            res = await client.get(f"{analyzer.base_url}/api/tags")
+            if res.status_code == 200:
+                endpoint_reachable = True
+                models = [m.get("name", "") for m in res.json().get("models", [])]
+                model_present = any(analyzer.model_name in m for m in models)
+    except Exception as err:
+        logger.debug("Ollama probe exception: %s", err)
+
+    if endpoint_reachable and model_present:
+        return (
+            True,
+            True,
+            "local",
+            "Live Gemma 3 Multimodal",
+        )
+    return (
+        endpoint_reachable,
+        False,
+        "local_degraded",
+        "Degraded Local (Endpoint Offline / Fallback)",
+    )
+
+
 async def run_full_benchmark(
     base_data_dir: str = "data",
     write_artifacts: bool = True,
+    analyzer: Optional[GemmaAnalyzer] = None,
 ) -> Dict[str, Any]:
     """Executes the entire 40-case evaluation suite and records reproducible metrics."""
     inputs_path = os.path.join(base_data_dir, "benchmark_inputs.jsonl")
@@ -242,13 +289,29 @@ async def run_full_benchmark(
     with open(inputs_path, "r", encoding="utf-8") as f:
         inputs_list = [json.loads(line) for line in f if line.strip()]
 
-    # 1. Run GearWitness Hybrid Pipeline
+    eval_analyzer = analyzer or GemmaAnalyzer()
+    (
+        endpoint_reachable,
+        live_model_executed,
+        execution_mode,
+        classifier_type,
+    ) = await probe_gemma_runtime_status(eval_analyzer)
+
+    # Truthful naming guard
+    if live_model_executed:
+        gw_system_name = "GearWitness Pipeline (CV + Live Gemma 3)"
+    elif execution_mode == "fixture":
+        gw_system_name = "GearWitness Fixture Pipeline (CV + Deterministic Fixture Classifier)"
+    else:
+        gw_system_name = "GearWitness Pipeline (CV + Degraded Fallback)"
+
+    # 1. Run GearWitness Pipeline
     t0 = time.perf_counter()
-    gw_preds = await run_gearwitness_pipeline_eval(inputs_list)
+    gw_preds = await run_gearwitness_pipeline_eval(inputs_list, analyzer=eval_analyzer)
     gw_latency = ((time.perf_counter() - t0) / len(inputs_list)) * 1000
 
     gw_metrics = score_predictions(
-        gw_preds, gold_path, "GearWitness Hybrid (CV + Gemma)", gw_latency
+        gw_preds, gold_path, gw_system_name, gw_latency
     )
 
     # 2. Run Deterministic Baseline (CV Diff Only on Pixels - NO GOLD LABELS)
@@ -279,9 +342,18 @@ async def run_full_benchmark(
         "benchmark_title": "GearWitness 40-Case Matched-Pair Return Inspection Benchmark",
         "sample_count": len(inputs_list),
         "evaluated_at": datetime.now(timezone.utc).isoformat(),
-        "app_mode": settings.APP_MODE.value,
+        "evaluated_commit_sha": get_git_sha(),
+        "execution_mode": execution_mode,
+        "classifier_type": classifier_type,
+        "live_model_executed": live_model_executed,
+        "model_endpoint_reachable": endpoint_reachable,
         "model_name": settings.GEMMA_MODEL_NAME,
-        "note": "Physical decoupling: prediction code has zero access to gold labels.",
+        "app_mode": settings.APP_MODE.value,
+        "note": (
+            "Physical decoupling: prediction code has zero access to gold labels. "
+            "High false-positive rate (0.700) on no-change pairs illustrates baseline CV sensitivity "
+            "and motivates Gemma multimodal reasoning and mandatory human operator confirmation."
+        ),
         "results": [
             cv_metrics,
             gw_metrics,
@@ -305,9 +377,19 @@ async def run_full_benchmark(
             "evaluated_code_sha": get_git_sha(),
             "evidence_commit_sha": None,
             "sample_count": len(inputs_list),
+            "execution_mode": execution_mode,
+            "classifier_type": classifier_type,
+            "live_model_executed": live_model_executed,
+            "model_endpoint_reachable": endpoint_reachable,
+            "model_name": settings.GEMMA_MODEL_NAME,
             "inputs_checksum_sha256": in_hash,
             "gold_checksum_sha256": gd_hash,
-            "provenance_note": "evaluated_code_sha identifies executed code. evidence_commit_sha is intentionally null to avoid self-referential hashing.",
+            "provenance_note": (
+                "evaluated_code_sha identifies executed code. "
+                "evidence_commit_sha is intentionally null to avoid self-referential hashing. "
+                "A SHA-256 digest is tamper-evident only when compared with a trusted previously stored digest; "
+                "it is not a signature, timestamp authority or proof of custody."
+            ),
         }
 
         with open(manifest_file, "w", encoding="utf-8") as f_man:

@@ -13,7 +13,7 @@ Rental operations frequently handle sensitive customer and organizational data:
 - GPS location metadata embedded in smartphone/camera photos
 - Photographic evidence of proprietary film equipment, unreleased prototypes, or closed production sets
 
-GearWitness implements strict privacy-by-design safeguards to guarantee customer confidentiality:
+GearWitness implements strict privacy-by-design safeguards to protect customer confidentiality:
 
 ### 1.1 Zero Cloud Exfiltration (Air-Gapped Default)
 - All computer vision alignment (OpenCV ORB + RANSAC) executes locally in-process.
@@ -57,10 +57,12 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 
 ---
 
-## 4. Cryptographic Integrity Seal Verification
+## 4. Content Integrity Digest Verification
 
-The inspection manifest SHA-256 signature is calculated deterministically over canonical JSON keys:
+The inspection manifest SHA-256 digest is calculated deterministically over canonical JSON keys:
 
-$$\text{Manifest Hash} = \text{SHA256}(\text{Canonicalize}(\{ \text{inspection\_id}, \text{media\_hashes}, \text{operator\_decisions}, \text{checklist\_state} \}))$$
+$$\text{Manifest Digest} = \text{SHA256}(\text{Canonicalize}(\{ \text{inspection\_id}, \text{media\_hashes}, \text{operator\_decisions}, \text{checklist\_state} \}))$$
 
-Any alteration to the image files, confirmed damages, or checklist items invalidates the verification hash, immediately alerting operators and clients to tampering.
+Any alteration to the image files, confirmed damages, or checklist items alters the verification digest.
+
+> **Integrity Notice:** A SHA-256 digest is tamper-evident only when compared with a trusted previously stored digest; it is not a cryptographic digital signature, timestamp authority, or proof of custody.

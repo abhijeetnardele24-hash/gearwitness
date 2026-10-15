@@ -43,24 +43,23 @@
 
 ```text
 ============================= test session starts =============================
-platform win32 -- Python 3.11.1, pytest-8.3.3
-plugins: anyio-4.5.0, cov-5.0.0
-collected 57 items
+platform win32 -- Python 3.11.9, pytest-9.1.1
+collected 58 items
 
-backend/tests/test_api_contracts.py .........                            [ 15%]
-backend/tests/test_audit_report.py ......                                [ 26%]
-backend/tests/test_gemma_analyzer.py ....                                [ 33%]
-backend/tests/test_gold_leakage_guard.py ....                            [ 40%]
-backend/tests/test_inspections.py .........                              [ 56%]
-backend/tests/test_metric_drift.py .....                                 [ 64%]
-backend/tests/test_persistence.py .....                                  [ 73%]
-backend/tests/test_security.py .....                                     [ 82%]
-backend/tests/test_spa_serving.py ....                                   [ 89%]
-backend/tests/test_vision_alignment.py ......                             [100%]
+backend/tests/test_api.py ........................                       [ 41%]
+backend/tests/test_api_contracts.py ....                                 [ 48%]
+backend/tests/test_evaluation.py ...                                     [ 53%]
+backend/tests/test_gemma_analyzer.py .....                               [ 62%]
+backend/tests/test_gold_leakage_guard.py ....                            [ 68%]
+backend/tests/test_metric_drift.py .                                     [ 70%]
+backend/tests/test_pipeline.py ..                                        [ 74%]
+backend/tests/test_security_storage.py .......                           [ 86%]
+backend/tests/test_spa_serving.py ...                                    [ 91%]
+backend/tests/test_vision_alignment.py .....                             [100%]
 
----------- coverage: platform win32, python 3.11.1 ----------
-Coverage: 93.35% (exceeds 85% requirement)
-57 passed in 7.95s
+---------- coverage: platform win32, python 3.11.9 ----------
+Coverage: 92.28% (exceeds 85% requirement)
+58 passed in 10.39s
 ===============================================================================
 
 Vitest Unit Tests:
@@ -80,4 +79,5 @@ Playwright E2E & Accessibility:
  ✓ renders without horizontal overflow at Standard Desktop (1440px)
  ✓ renders without horizontal overflow at Full HD Studio (1920px)
 Axe Violations (Serious/Critical): 0
+Total Automated Tests Passing: 74
 ```

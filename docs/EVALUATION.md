@@ -40,7 +40,7 @@ The audited benchmark results from `data/evaluation_metrics.json` are reported b
 
 ### Comparative Results (40 Matched-Pair Cases)
 
-| Metric | Deterministic CV Baseline (Pixels) | GearWitness Hybrid (CV + Gemma) |
+| Metric | Deterministic CV Baseline (Pixels) | GearWitness Fixture Pipeline (CV + Deterministic Fixture Classifier) |
 | :--- | :---: | :---: |
 | **Sample Count** | 40 | 40 |
 | **Schema Validity** | 100.0% | 100.0% |
@@ -53,7 +53,11 @@ The audited benchmark results from `data/evaluation_metrics.json` are reported b
 | **False Positives** | 13 | 13 |
 | **False Negatives** | 0 | 0 |
 | **True Negatives** | 3 | 3 |
-| **Measured Latency** | ~14.15 ms | ~68.85 ms |
+| **Measured Latency** | ~15.02 ms | ~67.93 ms |
+
+> **Synthetic Benchmark Notice:** These results reflect the deterministic fixture pipeline on 40 synthetic matched pairs. The high false-positive rate on no-change pairs (0.700) reflects baseline difference sensitivity and directly motivates local Gemma 3 multimodal reasoning and mandatory human operator review.
+>
+> **Architectural Safety Invariant:** The software has no automatic charging capability. Zero auto-charges is an architectural safety guarantee enforced by requiring operator approval before final manifest generation.
 
 ---
 
@@ -65,8 +69,8 @@ The audited benchmark results from `data/evaluation_metrics.json` are reported b
    The kit reconciliation pipeline detected every missing cable, battery, and lens cap in the accessory flat-lay views, auto-updating the return inventory checklist.
 3. **Region F1 Score: 78.7%**
    Achieved a 0.787 F1 score across all 40 cases under full decoupling without gold hints.
-4. **No-Change False Positive Rate: 70.0%**
-   Deterministic pixel-level difference analysis without neural refinement flags lighting shifts on 7 of 10 pristine assets. This confirms why the two-stage architecture is necessary: the fast CV stage guarantees 100% damage recall, while the Gemma classification stage and human operator review dismiss benign lighting shifts.
+4. **No-Change False Positive Rate: 70.0% (Motivation for Gemma + Human Review)**
+   Deterministic pixel-level difference analysis without neural refinement flags lighting shifts on 7 of 10 pristine assets. This demonstrates why the architecture pairs fast CV recall with multimodal Gemma reasoning and strict human adjudication to dismiss benign lighting shifts.
 
 ---
 

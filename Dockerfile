@@ -7,8 +7,8 @@
 FROM node:22-alpine AS frontend-builder
 WORKDIR /app/frontend
 
-COPY frontend/package.json ./
-RUN npm install
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci
 
 COPY frontend/ ./
 RUN npm run build
@@ -24,7 +24,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Install minimal system dependencies for OpenCV and image operations
+# Install minimal system dependencies for OpenCV and healthcheck
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libglib2.0-0 \
     libsm6 \
@@ -37,18 +37,25 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend source code
-COPY backend/ ./backend/
+# Create non-root user and application directories with proper ownership
+RUN groupadd -r appuser && useradd -r -g appuser -d /app -s /sbin/nologin appuser
 
-# Copy built frontend assets from stage 1
+# Copy application source code and bundled fixtures
+COPY backend/ ./backend/
+COPY data/ ./data/
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
-# Ensure media and fixtures directories exist
-RUN mkdir -p /app/backend/data/media /app/backend/data/fixtures
+# Ensure writable paths for SQLite, uploads, and media with appuser ownership
+RUN mkdir -p /app/uploads/originals /app/uploads/derived /app/uploads/crops /app/uploads/diffs \
+             /app/backend/data/media /app/backend/data/fixtures \
+    && touch /app/gearwitness.db \
+    && chown -R appuser:appuser /app
+
+USER appuser
 
 EXPOSE 8000
 
-# Health check
+# HTTP health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:${PORT}/api/v1/health || exit 1
 

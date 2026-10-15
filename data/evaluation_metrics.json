@@ -1,10 +1,15 @@
 {
   "benchmark_title": "GearWitness 40-Case Matched-Pair Return Inspection Benchmark",
   "sample_count": 40,
-  "evaluated_at": "2026-10-14T20:14:43.178420+00:00",
-  "app_mode": "fixture",
+  "evaluated_at": "2026-10-15T10:54:39.966399+00:00",
+  "evaluated_commit_sha": "ffc72b9a83232bf81cc7f3e65b6e253949755dfa",
+  "execution_mode": "fixture",
+  "classifier_type": "Deterministic Fixture Classifier",
+  "live_model_executed": false,
+  "model_endpoint_reachable": false,
   "model_name": "gemma3:4b",
-  "note": "Physical decoupling: prediction code has zero access to gold labels.",
+  "app_mode": "fixture",
+  "note": "Physical decoupling: prediction code has zero access to gold labels. High false-positive rate (0.700) on no-change pairs illustrates baseline CV sensitivity and motivates Gemma multimodal reasoning and mandatory human operator confirmation.",
   "results": [
     {
       "system_name": "Deterministic CV Baseline (Pixels)",
@@ -19,10 +24,10 @@
       "false_positives": 13,
       "false_negatives": 0,
       "true_negatives": 3,
-      "measured_latency_ms": 14.15
+      "measured_latency_ms": 15.02
     },
     {
-      "system_name": "GearWitness Hybrid (CV + Gemma)",
+      "system_name": "GearWitness Fixture Pipeline (CV + Deterministic Fixture Classifier)",
       "sample_count": 40,
       "schema_validity_pct": 100.0,
       "proposed_region_precision": 0.649,
@@ -34,7 +39,7 @@
       "false_positives": 13,
       "false_negatives": 0,
       "true_negatives": 3,
-      "measured_latency_ms": 68.85
+      "measured_latency_ms": 67.93
     }
   ]
 }

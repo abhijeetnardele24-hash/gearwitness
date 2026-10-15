@@ -1,9 +1,14 @@
 {
-  "execution_timestamp": "2026-10-14T20:14:43.179439+00:00",
-  "evaluated_code_sha": "d74ff60d4a09c3e974cfbab69d73fb40421ea293",
+  "execution_timestamp": "2026-10-15T10:54:39.996035+00:00",
+  "evaluated_code_sha": "ffc72b9a83232bf81cc7f3e65b6e253949755dfa",
   "evidence_commit_sha": null,
   "sample_count": 40,
+  "execution_mode": "fixture",
+  "classifier_type": "Deterministic Fixture Classifier",
+  "live_model_executed": false,
+  "model_endpoint_reachable": false,
+  "model_name": "gemma3:4b",
   "inputs_checksum_sha256": "831d8a6996902519a71c4a67e309b39bdfa52631c5323834803b049a49177f39",
   "gold_checksum_sha256": "5cd2a06a02a74e4a935b1266f5b04d4dd50b466dc45cc92701950cfc11c9e11e",
-  "provenance_note": "evaluated_code_sha identifies executed code. evidence_commit_sha is intentionally null to avoid self-referential hashing."
+  "provenance_note": "evaluated_code_sha identifies executed code. evidence_commit_sha is intentionally null to avoid self-referential hashing. A SHA-256 digest is tamper-evident only when compared with a trusted previously stored digest; it is not a signature, timestamp authority or proof of custody."
 }

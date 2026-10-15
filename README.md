@@ -37,7 +37,7 @@ Equipment rental operations (cameras, cinema packages, pro audio, drones, precis
 2. **CV Alignment:** Deterministic OpenCV ORB feature detection and planar homography align return photo to baseline perspective.
 3. **Gemma 3 Analysis:** Local multimodal reasoning analyzes sub-pixel cropped regions and emits structured condition proposals.
 4. **Human Review:** Operator confirms, dismisses, or escalates every proposal with zero automated fines or billing.
-5. **Integrity Report:** Source-linked report sealed with SHA-256 Content Integrity Digest and timestamped audit log.
+5. **Integrity Report:** Source-linked report verified with a tamper-evident SHA-256 Content Integrity Digest and timestamped audit log.
 
 ---
 
@@ -55,13 +55,13 @@ Extracted crop pairs are analyzed locally using **Gemma 3 Multimodal** (running 
 - Provides factual, observable rationales without speculative or accusatory phrasing.
 
 ### 3. Strict Human Decision Boundary
-**GearWitness never assesses fines, charges credit cards, or makes final legal determinations.** Every anomaly is presented as a *Change Proposal* requiring explicit operator confirmation:
+**GearWitness never assesses fines, charges credit cards, or makes final legal determinations.** The software has no automatic charging capability. Every anomaly is presented as a *Change Proposal* requiring explicit operator confirmation:
 - `✓ Confirm Damage`: True return damage.
 - `✕ Dismiss (Wear / Glare)`: Preexisting mark, minor wear, or specular reflection.
 - `? Mark Uncertain`: Flags item for senior mechanic escalation.
 
-### 4. Cryptographic Audit Package
-Every inspection produces a sealed SHA-256 Content Integrity Digest containing the hashes of all raw photos, operator decisions, timestamped notes, and kit reconciliation status. Both standalone printable HTML and vector PDF reports can be exported instantly.
+### 4. Forensic Audit Package
+Every inspection produces a tamper-evident SHA-256 Content Integrity Digest containing the hashes of all raw photos, operator decisions, timestamped notes, and kit reconciliation status. Both standalone printable HTML and vector PDF reports can be exported instantly. *(Note: A SHA-256 digest is tamper-evident only when compared with a trusted previously stored digest; it is not a cryptographic digital signature, timestamp authority, or legal certification).*
 
 ![Audit Report & Manifest](docs/assets/audit_report_manifest.png)
 
@@ -138,15 +138,16 @@ GearWitness was validated on a physically decoupled 40-case synthetic benchmark 
 
 ![Evaluation Metrics Chart](docs/assets/evaluation_chart.png)
 
-| System Pipeline | Sample Count | Recall (Safety Catch) | Precision | F1 Score | Missing Accessory Acc | Hallucinated Auto-Fines |
+| System Pipeline | Sample Count | Recall (Damage Caught) | Precision | F1 Score | Missing Accessory Acc | No-Change FPR |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Deterministic CV (Pixels)** | 40 | **1.000** | 0.649 | 0.787 | 100.0% | **0.0%** |
-| **GearWitness Hybrid (CV + Gemma)** | 40 | **1.000** | 0.649 | 0.787 | 100.0% | **0.0%** |
+| **Deterministic CV (Pixels)** | 40 | **1.000** (24/24) | 0.649 | 0.787 | 100.0% (8/8) | 70.0% (7/10) |
+| **GearWitness Fixture Pipeline (CV + Deterministic Fixture Classifier)** | 40 | **1.000** (24/24) | 0.649 | 0.787 | 100.0% (8/8) | 70.0% (7/10) |
 
 - **Recall on True Physical Defects:** **100.0%** (24/24 true physical defects detected without omission).
 - **Missing Accessory Classification Accuracy:** **100.0%** (8/8 accessories correctly caught).
-- **Zero Hallucinated Fines:** **0%** auto-charged — 100% of anomalies remain change proposals subject to operator judgment.
-- **Deterministic Latency:** 14.15 ms average computer vision alignment and difference extraction.
+- **Architectural Safety Invariant:** **No automatic charging capability** — the software possesses no billing or fine execution mechanism. All detected anomalies are change proposals requiring explicit human operator review.
+- **Synthetic Fixture Benchmark Notice:** The 0.700 false-positive rate on pristine returns illustrates baseline difference sensitivity, directly motivating local Gemma 3 multimodal reasoning and mandatory operator confirmation.
+- **Deterministic Latency:** ~15.02 ms average computer vision alignment and difference extraction.
 
 *Full benchmark logs, methodology, and decoupling guard tests are detailed in [docs/EVALUATION.md](docs/EVALUATION.md).*
 
