@@ -165,7 +165,7 @@ The reproducible results recorded in `data/evaluation_metrics.json` are:
 1. **100% Recall Safety Net:** Zero physical damage went undetected across the 40 test cases ($FN = 0$).
 2. **Why Gemma and Human Review Are Necessary:** The 0.700 false-positive rate on pristine, no-change returns illustrates the inherent sensitivity of raw pixel-level subtraction to harmless lighting shifts. This high sensitivity is deliberate for safety (catching all real damage), and directly motivates pairing CV with multimodal Gemma reasoning and mandatory human operator confirmation to dismiss harmless glare.
 3. **Architectural Safety Invariant (0 Auto-Charges):** The software has no automatic charging capability. Zero automated charges is an architectural invariant, not a statistical metric.
-4. **Automated Quality Suite:** 74 automated tests pass across Python pytest (58 tests, >92% coverage), Vitest (10 tests), and Playwright E2E/Axe accessibility (6 tests, 0 serious/critical violations).
+4. **Automated Quality Suite:** 77 automated tests pass across Python pytest (61 tests, >92% coverage), Vitest (10 tests), and Playwright E2E/Axe accessibility (6 tests, 0 serious/critical violations).
 
 ---
 
@@ -173,7 +173,7 @@ The reproducible results recorded in `data/evaluation_metrics.json` are:
 
 1. **Local On-Premises Processing:** Customer photos and serial numbers remain on the local counter workstation.
 2. **Automated EXIF Sanitization:** GPS coordinates, camera serial numbers, and device tags are scrubbed before storage.
-3. **Tamper-Evident SHA-256 Digest:** Generates a SHA-256 Content Integrity Digest sealing raw photo hashes, bounding box coordinates, and operator decisions. *(Note: A SHA-256 digest is tamper-evident only when compared with a trusted previously stored digest; it is not a digital signature, timestamp authority, or proof of custody).*
+3. **Tamper-Evident SHA-256 Digest:** Generates a SHA-256 Content Integrity Digest binding raw photo hashes, bounding box coordinates, and operator decisions into a finalized manifest. *(Note: A SHA-256 digest is tamper-evident only when compared with a trusted previously stored digest; it is not a digital signature, timestamp authority, or proof of custody).*
 4. **Security Scan:** Bandit scan completed with **0 High, 0 Medium, and 0 Low** vulnerabilities.
 
 ![Audit Report Manifest](https://raw.githubusercontent.com/abhijeetnardele24-hash/gearwitness/main/docs/screenshots/audit_report_manifest.png)

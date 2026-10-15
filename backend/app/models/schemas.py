@@ -218,5 +218,6 @@ class HealthResponse(BaseModel):
     version: str
     ollama_connected: bool
     model_name: str
+    target_model: Optional[str] = None
     model_available: bool
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

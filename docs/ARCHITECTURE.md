@@ -122,7 +122,7 @@ To prevent data leaks and protect customer privacy:
 
 ---
 
-## 6. Cryptographic Manifest & Audit Seal
+## 6. Finalized Manifest & Content Integrity Digest
 
 Upon operator review completion, GearWitness constructs a tamper-evident Content Integrity Digest JSON audit manifest:
 

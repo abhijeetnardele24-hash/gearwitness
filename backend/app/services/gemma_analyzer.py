@@ -50,7 +50,7 @@ class GemmaAnalyzer:
         Returns (connected, configured_model, model_present).
         """
         if self.app_mode == AppMode.FIXTURE:
-            return True, f"{self.model_name} (Fixture Verified)", True
+            return False, "Deterministic Fixture Engine", False
 
         try:
             async with httpx.AsyncClient(timeout=3.0) as client:

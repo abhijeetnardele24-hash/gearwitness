@@ -18,5 +18,6 @@ async def get_health():
         version=settings.APP_VERSION,
         ollama_connected=connected,
         model_name=model_name,
+        target_model=settings.GEMMA_MODEL_NAME,
         model_available=available,
     )

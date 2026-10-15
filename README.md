@@ -121,13 +121,13 @@ uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
 ```
 Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser.
 
-### 5. Run with Local Ollama (Live Mode)
+### 5. Run with Local Ollama (Local Mode)
 ```bash
 # Ensure Ollama >= 0.6.0 is running and pull Gemma 3:
 ollama pull gemma3:4b
 
-# Start GearWitness in live local mode:
-APP_MODE=live uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+# Start GearWitness in local mode:
+APP_MODE=local uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
 ```
 
 ---

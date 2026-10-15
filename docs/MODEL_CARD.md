@@ -42,7 +42,7 @@ GearWitness strictly separates deterministic fixture execution from live model i
 | **Execution Engine** | Deterministic rule-based proposal generator | Local Ollama instance serving `gemma3:4b` |
 | **Model Invocation** | No neural network invoked | Multimodal image-pair prompt via `/api/generate` |
 | **Network Requirements** | None (100% offline, reproducible) | Localhost only (`http://localhost:11434`) |
-| **Health Probe** | Reports `gemma3:4b (Fixture Verified)` | Queries `/api/tags` to assert Ollama connectivity and model presence |
+| **Health Probe** | Reports deterministic fixture mode (`ollama_connected: false`, `model_available: false`, `target_model: gemma3:4b`) | Queries `/api/tags` to assert Ollama connectivity and model presence |
 | **Degraded State** | N/A | If Ollama is offline or model absent, transitions explicitly to degraded fallback with zero fabricated confidence |
 | **Benchmark Attribution** | Explicitly labeled as *GearWitness Fixture Pipeline* | Labeled as *CV + Live Gemma 3* only when live execution succeeds |
 

@@ -8,7 +8,11 @@ def test_api_health(client):
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == "healthy"
-    assert "app_mode" in data
+    assert data["app_mode"] == "fixture"
+    assert data["ollama_connected"] is False
+    assert data["model_available"] is False
+    assert "Fixture" in data["model_name"]
+    assert data["target_model"] == "gemma3:4b"
     assert "version" in data
 
 

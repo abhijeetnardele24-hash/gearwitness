@@ -30,11 +30,11 @@ PS> curl -s http://127.0.0.1:11434/api/version
 In strict compliance with the project guidelines:
 1. **Zero Fabrication:** Fixture data, synthetic runs, or hypothetical sample JSON outputs are **never** presented as live model execution logs. No fabricated specimen response is recorded here.
 2. **Current System State:** Live Gemma 3 execution remains **PENDING HOST RUNTIME DEPLOYMENT**.
-3. **Graceful Host Fallback:** When `APP_MODE=live` is configured without an active Ollama instance, the backend (`backend/app/services/gemma_analyzer.py`):
+3. **Graceful Host Fallback:** When `APP_MODE=local` is configured without an active Ollama instance, the backend (`backend/app/services/gemma_analyzer.py`):
    - Catches connection failures cleanly without crashing.
    - Sets condition type to `unknown`.
    - Records rationale explicitly as `[DEGRADED - MODEL OFFLINE] Connection to Ollama failed.`.
-   - Emits zero hallucinated findings.
+   - No neural-model inference is executed when Ollama is unavailable; the degraded response is explicitly labelled unavailable.
 4. **Mocked Unit Test Verification:** Offline handling, error degradation, and schema validation are verified via unit tests in `backend/tests/test_gemma_analyzer.py`:
    - `test_gemma_health_local_mode_offline`: PASSED
    - `test_gemma_health_fixture_mode`: PASSED
@@ -57,9 +57,9 @@ When deploying GearWitness to a workstation with GPU or Apple Silicon hardware:
    ollama pull gemma3:4b
    ```
 
-3. **Launch GearWitness in Live Mode:**
+3. **Launch GearWitness in Local Mode:**
    ```bash
-   APP_MODE=live uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+   APP_MODE=local uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
    ```
 
 4. **Verify Live Inference:**
@@ -67,9 +67,10 @@ When deploying GearWitness to a workstation with GPU or Apple Silicon hardware:
    ```json
    {
      "status": "healthy",
-     "app_mode": "live",
+     "app_mode": "local",
      "ollama_connected": true,
      "model_name": "gemma3:4b",
-     "model_available": true
+     "model_available": true,
+     "target_model": "gemma3:4b"
    }
    ```

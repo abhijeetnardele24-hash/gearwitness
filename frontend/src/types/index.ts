@@ -88,6 +88,7 @@ export interface HealthResponse {
   version: string;
   ollama_connected: boolean;
   model_name: string;
+  target_model?: string;
   model_available: boolean;
   timestamp: string;
 }

@@ -12,14 +12,14 @@
 | ID | Specification Requirement | Verification Evidence / Artifact | Status |
 | :---: | :--- | :--- | :---: |
 | **REQ-01** | Completely new `gearwitness` repo (no code reuse from RelayZero/AmbientOps) | `https://github.com/abhijeetnardele24-hash/gearwitness.git` created from scratch. Zero shared files. | **GO** |
-| **REQ-02** | Dual Operating Modes (`APP_MODE=fixture` vs `APP_MODE=live`) | `backend/app/config.py` with Pydantic `AppMode`. Tested via `test_gemma_health_fixture_mode` and `test_gemma_health_local_mode_offline`. | **GO** |
+| **REQ-02** | Dual Operating Modes (`APP_MODE=fixture` vs `APP_MODE=local`) | `backend/app/config.py` with Pydantic `AppMode`. Tested via `test_gemma_health_fixture_mode` and `test_gemma_health_local_mode_offline`. | **GO** |
 | **REQ-03** | Deterministic CV Alignment (ORB + RANSAC + Bilateral + Otsu) | `backend/app/services/vision_alignment.py` tested in `test_align_and_detect_changes_hero_fixture` and `test_insufficient_overlap_detection`. | **GO** |
 | **REQ-04** | Air-Gapped Local Gemma Multimodal Client | `backend/app/services/gemma_analyzer.py` configured for `gemma3:4b` with Ollama >=0.6.0. Schema validation & offline fallbacks tested. (Live execution pending host Ollama daemon). | **GO (Fixture Verified / Live Pending)** |
 | **REQ-05** | Strict Human Decision Boundary (no auto-charge / auto-fine) | Proposals require operator action (`confirm`, `dismiss`, `uncertain`). Finalized into a tamper-evident SHA-256 Content Integrity Digest. Software has no automatic charging capability. | **GO** |
 | **REQ-06** | "Forensic Calm" React 18 SPA Frontend | Drag reveal slider, side-by-side mode, diff heatmaps, zoom/pan, evidence cards, kit checklist, 360px–1920px responsive with zero horizontal overflow. | **GO** |
 | **REQ-07** | Decoupled 40-Case Evaluation Benchmark | `data/benchmark_inputs.jsonl` (zero gold labels) + `data/benchmark_gold.jsonl`. Proposed region recall: 1.000 (24/24 true physical defects), F1: 0.787, precision: 0.649. Synthetic fixture benchmark with 0.700 no-change FPR motivating Gemma multimodal reasoning and mandatory operator confirmation. | **GO** |
 | **REQ-08** | Automated Zero-Gold Leakage Guard | `backend/tests/test_gold_leakage_guard.py` asserts immediate exception if gold fields leak into pipeline. 4/4 passing. | **GO** |
-| **REQ-09** | Automated Test Suite (Pytest Coverage ≥ 85%) | **58 passed in 10.39s**, **92.28% code coverage** (exceeds requirement). | **GO** |
+| **REQ-09** | Automated Test Suite (Pytest Coverage ≥ 85%) | **61 passed in 13.39s**, **92.96% code coverage** (exceeds requirement). | **GO** |
 | **REQ-10** | Code Quality & Linter Compliance | `ruff check backend` (0 errors), `oxlint` (0 errors on 20 frontend files). | **GO** |
 | **REQ-11** | Security Scan (Bandit 0 High / Medium / Low) | Bandit scan: **0 High, 0 Medium, 0 Low** vulnerabilities. | **GO** |
 | **REQ-12** | Input Sanitization & EXIF Scrubbing | `backend/app/services/storage.py` tests pass for JPEG, PNG, WebP magic bytes, path traversal defenses, and EXIF stripping. | **GO** |
@@ -33,11 +33,11 @@
 
 ## 2. Automated Quality Gate Metrics
 
-- **Total Automated Tests:** 74 / 74 Passed (100%)
-  - Python Pytest Suite: 58 Passed
+- **Total Automated Tests:** 77 / 77 Passed (100%)
+  - Python Pytest Suite: 61 Passed
   - Vitest Component Suite: 10 Passed
   - Playwright E2E & Axe Accessibility: 6 Passed
-- **Backend Code Coverage:** 92.28% (Required: ≥85.0%)
+- **Backend Code Coverage:** 92.96% (Required: ≥85.0%)
 - **Python Linter (Ruff):** 0 Errors, 0 Warnings
 - **Security Scanner (Bandit):** 0 High, 0 Medium, 0 Low Issues
 - **Frontend Linter (Oxlint):** 0 Errors, 0 Warnings on 20 files

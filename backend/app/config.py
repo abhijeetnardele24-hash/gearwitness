@@ -1,6 +1,7 @@
 import os
 from enum import Enum
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,6 +22,16 @@ class Settings(BaseSettings):
     APP_VERSION: str = "0.1.0"
     APP_MODE: AppMode = AppMode.FIXTURE
 
+    @field_validator("APP_MODE", mode="before")
+    @classmethod
+    def normalize_app_mode(cls, v):
+        if isinstance(v, str):
+            clean = v.strip().lower()
+            if clean == "live":
+                return AppMode.LOCAL
+            return AppMode(clean)
+        return v
+
     # Server
     HOST: str = "127.0.0.1"  # nosec B104
     PORT: int = 8000
@@ -36,8 +47,12 @@ class Settings(BaseSettings):
     MODEL_TIMEOUT_SECONDS: int = 45
 
 
+_raw_mode = os.getenv("APP_MODE", "fixture").strip().lower()
+if _raw_mode == "live":
+    _raw_mode = "local"
+
 settings = Settings(
-    APP_MODE=AppMode(os.getenv("APP_MODE", "fixture")),
+    APP_MODE=AppMode(_raw_mode),
     HOST=os.getenv("HOST", "127.0.0.1"),
     OLLAMA_BASE_URL=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
     GEMMA_MODEL_NAME=os.getenv("GEMMA_MODEL_NAME", "gemma3:4b"),

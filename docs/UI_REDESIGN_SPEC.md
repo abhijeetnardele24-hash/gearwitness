@@ -16,7 +16,7 @@
    - **Dismiss (Artifact):** Reject benign artifacts (specular reflections, dust, baseline wear).
    - **Uncertain (Escalate):** Route to supervisor / depot lead for physical bench test.
 4. **Kit Accessory Reconciliation:** Verify presence of physical cables, chargers, caps, and batteries against checkout checklist.
-5. **Sealed Manifest & Export:** Once 100% of proposals and checklist items are verified, generate SHA-256 sealed forensic return manifest with PDF/HTML download.
+5. **Finalized Manifest & Export:** Once 100% of proposals and checklist items are verified, generate SHA-256 Content Integrity Digest and finalized forensic return manifest with PDF/HTML download.
 
 ---
 
@@ -24,7 +24,7 @@
 
 ### Desktop Breakpoint ($\ge 1024\text{px}$)
 - **Top Command Bar (56px):** Brand identifier, Active Inspection Selector, App Mode Badge (`FIXTURE` / `LOCAL` / `CV-ONLY`), System Health, Privacy Indicator (`Local Air-Gapped`), and primary workflow action.
-- **Workflow Stepper (40px):** Capture (4/4) → Align (OK) → Review (3 proposals) → Export (Sealed).
+- **Workflow Stepper (40px):** Capture (4/4) → Align (OK) → Review (3 proposals) → Export (Finalized).
 - **Split Workstation Body:**
   - **Main Canvas Area (65% width):** High-precision comparison viewport, tool toolbar (Reveal, Split, Heatmap, 100%, Fit, Zoom In/Out, Reset), normalized coordinate bounding box overlays.
   - **Evidence Rail (35% width):** Proposal cards, side-by-side thumbnail crops, severity pills, model rationale, decision actions, and kit checklist drawer.

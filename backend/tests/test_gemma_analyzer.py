@@ -15,9 +15,9 @@ from backend.app.services.gemma_analyzer import GemmaAnalyzer, encode_image_base
 async def test_gemma_health_fixture_mode():
     analyzer = GemmaAnalyzer(app_mode=AppMode.FIXTURE)
     connected, model_name, available = await analyzer.check_health()
-    assert connected is True
+    assert connected is False
     assert "Fixture" in model_name
-    assert available is True
+    assert available is False
 
 
 @pytest.mark.asyncio
@@ -27,6 +27,43 @@ async def test_gemma_health_local_mode_offline():
     connected, model_name, available = await analyzer.check_health()
     assert connected is False
     assert available is False
+
+
+def test_app_mode_local_loads_successfully():
+    from backend.app.config import AppMode, Settings
+    cfg = Settings(APP_MODE="local")
+    assert cfg.APP_MODE == AppMode.LOCAL
+    analyzer = GemmaAnalyzer(app_mode=cfg.APP_MODE)
+    assert analyzer.app_mode == AppMode.LOCAL
+    assert analyzer.base_url == "http://localhost:11434"
+
+
+def test_app_mode_live_backward_compatible_alias():
+    from backend.app.config import AppMode, Settings
+    cfg = Settings(APP_MODE="live")
+    assert cfg.APP_MODE == AppMode.LOCAL
+    analyzer = GemmaAnalyzer(app_mode=cfg.APP_MODE)
+    assert analyzer.app_mode == AppMode.LOCAL
+
+
+@pytest.mark.asyncio
+async def test_analyze_crop_pair_local_mode_offline_degraded(tmp_path):
+    paths = ensure_fixture_images(str(tmp_path))
+    analyzer = GemmaAnalyzer(base_url="http://localhost:59999", app_mode=AppMode.LOCAL)
+    bbox = BoundingBox(x=10, y=10, width=50, height=50)
+    proposal = await analyzer.analyze_crop_pair(
+        inspection_id="insp_test",
+        asset_name="Sony FX3",
+        view=CaptureViewEnum.FRONT,
+        bbox=bbox,
+        checkout_crop_path=paths["fx3_front_checkout"],
+        checkin_crop_path=paths["fx3_front_checkin"],
+        index=0,
+    )
+    assert proposal.condition_type == ConditionTypeEnum.UNKNOWN
+    assert proposal.confidence == 0.0
+    assert "[DEGRADED" in proposal.model_rationale
+    assert "OFFLINE" in proposal.model_rationale
 
 
 @pytest.mark.asyncio

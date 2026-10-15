@@ -118,7 +118,7 @@ def patch_checklist_item(
 @router.post(
     "/{inspection_id}/approve",
     response_model=Inspection,
-    summary="Approve inspection and seal manifest",
+    summary="Approve inspection and finalize manifest",
 )
 def approve_inspection(inspection_id: str) -> Inspection:
     """

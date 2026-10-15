@@ -129,10 +129,14 @@ jobs:
             exit 1
           fi
 
-          # Assert /api/v1/health returns HTTP 200 with valid status
+          # Assert /api/v1/health returns HTTP 200 with truthful fixture status
           HEALTH_JSON=$(curl -s http://localhost:8000/api/v1/health)
           echo "Health response: $HEALTH_JSON"
           echo "$HEALTH_JSON" | grep -q '"status":"healthy"'
+          echo "$HEALTH_JSON" | grep -q '"app_mode":"fixture"'
+          echo "$HEALTH_JSON" | grep -q '"ollama_connected":false'
+          echo "$HEALTH_JSON" | grep -q '"model_available":false'
+          echo "$HEALTH_JSON" | grep -q '"target_model":"gemma3:4b"'
 
           # Assert / returns the built frontend
           FRONTEND_HTML=$(curl -s http://localhost:8000/)
