@@ -1,64 +1,75 @@
 # Live Gemma 3 Evaluation Evidence Artifact
 
 > **Evaluation Mode:** Local Multimodal (Gemma 3 via Ollama)  
-> **Status:** PENDING LOCAL RUNTIME (Documented in accordance with verification rule)  
+> **Status:** PENDING HOST RUNTIME DEPLOYMENT (Transparently documented per verification rules)  
 > **Target Model:** `gemma3:4b`  
 > **Configured Min Version:** `OLLAMA_MIN_VERSION: 0.6.0`  
 > **Target Endpoint:** `http://localhost:11434/api/generate`  
-> **Verification Timestamp:** 2026-10-14T20:40:00Z  
+> **Audit Date:** 2026-10-15  
 
 ---
 
-## 1. Runtime Precondition Check
+## 1. Runtime Environment Check
 
-An automated check was executed on the host system at the start of this evaluation phase:
+An automated probe was performed on the current evaluation host:
 
 ```powershell
-PS> ollama list
-ollama: The term 'ollama' is not recognized as a name of a cmdlet, function, script file, or executable program.
+PS> where.exe ollama
+INFO: Could not find files for the given pattern(s).
 
 PS> curl -s http://127.0.0.1:11434/api/version
-(Connection refused / offline)
+(No local server listening on port 11434)
 ```
+
+**Result:** Ollama is not installed or running in this host environment.
+
+---
 
 ## 2. Integrity Declaration & Anti-Fabrication Guarantee
 
-In strict compliance with the **Master Corrective Directive**:
-- Fixture outputs are **never** substituted as live Gemma execution logs.
-- Because the local Ollama daemon is offline/not running on this environment, this live execution status is marked explicitly as **PENDING HOST RUNTIME DEPLOYMENT**.
-- The backend gracefully handles this state via `backend/app/services/gemma_analyzer.py` fallback:
-  - Returns `condition_type="unknown"`
-  - Rationale explicitly notes `[DEGRADED - MODEL OFFLINE]`
-  - Zero hallucinated or fabricated proposals are emitted.
+In strict compliance with the project guidelines:
+1. **Zero Fabrication:** Fixture data, synthetic runs, or hypothetical sample JSON outputs are **never** presented as live model execution logs. No fabricated specimen response is recorded here.
+2. **Current System State:** Live Gemma 3 execution remains **PENDING HOST RUNTIME DEPLOYMENT**.
+3. **Graceful Host Fallback:** When `APP_MODE=live` is configured without an active Ollama instance, the backend (`backend/app/services/gemma_analyzer.py`):
+   - Catches connection failures cleanly without crashing.
+   - Sets condition type to `unknown`.
+   - Records rationale explicitly as `[DEGRADED - MODEL OFFLINE] Connection to Ollama failed.`.
+   - Emits zero hallucinated findings.
+4. **Mocked Unit Test Verification:** Offline handling, error degradation, and schema validation are verified via unit tests in `backend/tests/test_gemma_analyzer.py`:
+   - `test_gemma_health_local_mode_offline`: PASSED
+   - `test_gemma_health_fixture_mode`: PASSED
+   - `test_encode_image_base64`: PASSED
 
-## 3. Sanitized Specimen Contract for Live Host Execution
+---
 
-When an Ollama daemon with `gemma3:4b` is activated (`ollama run gemma3:4b`), the following request/response transaction schema executes:
+## 3. Operator Instructions for Live Gemma 3 Activation
 
-### Raw Request Specimen
-```json
-{
-  "model": "gemma3:4b",
-  "prompt": "You are GearWitness, an equipment return inspection analyst...\n[BASE64_IMAGE_CROPS]",
-  "stream": false,
-  "format": "json",
-  "options": {
-    "temperature": 0.1,
-    "top_p": 0.95
-  }
-}
-```
+When deploying GearWitness to a workstation with GPU or Apple Silicon hardware:
 
-### Raw Response Specimen
-```json
-{
-  "model": "gemma3:4b",
-  "created_at": "2026-10-14T20:40:00.000000Z",
-  "response": "{\"condition_type\": \"scratch\", \"severity\": \"moderate\", \"confidence\": 0.88, \"description\": \"Linear surface gouge through anodized coating\", \"model_rationale\": \"Continuous scratch with raised edge burr across top plate rail.\"}",
-  "done": true,
-  "total_duration": 1120000000,
-  "load_duration": 45000000,
-  "prompt_eval_count": 620,
-  "eval_count": 48
-}
-```
+1. **Install Ollama (>= 0.6.0):**
+   ```bash
+   # Download from https://ollama.ai/
+   ollama --version
+   ```
+
+2. **Pull Gemma 3 Multimodal Model:**
+   ```bash
+   ollama pull gemma3:4b
+   ```
+
+3. **Launch GearWitness in Live Mode:**
+   ```bash
+   APP_MODE=live uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+   ```
+
+4. **Verify Live Inference:**
+   Check `http://127.0.0.1:8000/api/v1/health`. The response will report:
+   ```json
+   {
+     "status": "healthy",
+     "app_mode": "live",
+     "ollama_connected": true,
+     "model_name": "gemma3:4b",
+     "model_available": true
+   }
+   ```

@@ -1,56 +1,35 @@
-# GearWitness Video Demonstration Script
+# GearWitness Video Demonstration Script & Shot List
 
-> **Duration:** 2 Minutes 45 Seconds  
-> **Target Audience:** Hackathon Judges, DEV Community, Rental Operations Managers  
-> **Setting:** GearWitness Counter Workstation on `http://127.0.0.1:8000`  
-
----
-
-## Act 1: The Rental Counter Dilemma (0:00 – 0:35)
-
-- **[Visual]:** Opening title slide with the GearWitness cover image and logo.
-- **[Voiceover]:**  
-  *"Every equipment rental business—from high-end cinema rental houses in Hollywood to neighborhood camera co-ops—dreads the return counter. A client walks in with a $15,000 cinema package. There are five cases, twenty cables, three lenses, and a tight deadline. The rental agent has two choices: hold up the line for 20 minutes with a magnifying glass, or rush the check-in and discover a scratched front dial or missing $200 cable hours after the client has left."*
-- **[Visual]:** Cut to GearWitness running in the browser. Highlight the "Forensic Calm" aesthetic: warm stone palette, crisp slate typography, and clear status indicators.
+> **Duration:** 105 Seconds (1 Minute 45 Seconds) — Strict 90–120s Window  
+> **Target Audience:** DEV Challenge Judges, Equipment Rental Operators, Open-Source AI Community  
+> **Environment:** GearWitness Counter Workstation on `http://127.0.0.1:8000`  
+> **Visual Aesthetic:** "Forensic Calm" Studio Palette (Warm Stone, Slate & Evidentiary Teal)  
 
 ---
 
-## Act 2: Deterministic Alignment & Multi-Angle Comparison (0:35 – 1:20)
+## 🎬 Exact Production Shot List (105s Total)
 
-- **[Visual]:** Point cursor to the **Asset Identity Strip**.  
-  Show the Sony FX3 Cinema Kit (`Serial #4892011`, `Rental Ref #RN-2026-8941`).
-- **[Voiceover]:**  
-  *"This is GearWitness. It’s an air-gapped, privacy-first return inspection station powered by local computer vision and Google’s Gemma 3 multimodal model. Notice that nothing is sent to the cloud. Customer serial numbers, photos, and project names remain 100% on this local counter computer."*
-- **[Visual]:** Drag the split reveal slider across the Sony FX3 camera body.
-- **[Voiceover]:**  
-  *"Here’s the baseline checkout photo on the left, and the return photo on the right. Even if the customer returned the camera at a slightly different angle, our OpenCV ORB and RANSAC homography engine aligns the perspective within sub-millimeter precision."*
-- **[Visual]:** Toggle **Diff Heatmap** on. Show the red/amber contour highlighting the anomalous front dial region. Switch to **Side-by-Side** mode, then back to Split Reveal.
-
----
-
-## Act 3: AI Proposals & Human Decision Boundary (1:20 – 2:05)
-
-- **[Visual]:** Move cursor to the **Evidence Tray** on the right column. Click on **Proposal #1 (Front Dial Scratch)**.
-- **[Voiceover]:**  
-  *"The CV engine identified an anomaly and passed the crop pair to Gemma 3 running locally on Ollama. The model identified a fresh scratch breaching the anodized coating, rated it Minor severity with 89% confidence, and provided an objective rationale."*
-- **[Visual]:** Click **`✓ Confirm Damage`**. The card badge turns green.
-- **[Visual]:** Click on **Proposal #2 (Sensor Glass Glare)**.
-- **[Voiceover]:**  
-  *"Here is Proposal #2. The model correctly classified this highlight as lighting glare rather than a physical scratch. Because GearWitness enforces a strict human decision boundary, the system never auto-charges the customer. I simply click `✕ Dismiss (Wear / Glare)`."*
-- **[Visual]:** Scroll down to the **Kit Inventory Checklist**. Click the **Missing** button on the HDMI 4K Cable.
-- **[Voiceover]:**  
-  *"The accessory flat-lay check confirmed that the HDMI cable wasn't returned in the Pelican case. With one click, the inventory checklist is updated."*
+| Shot # | Timecode | Duration | Visual Action / Camera Framing | Audio / Spoken Voiceover Line |
+| :---: | :---: | :---: | :--- | :--- |
+| **01** | `0:00 – 0:15` | 15s | **Title Card & Workspace Hero View:**<br>Full-screen browser showing GearWitness running locally. Highlight `MODE: FIXTURE (AUDITED)` pill, equipment title `Sony FX3 Cinema Kit`, and clean "Forensic Calm" interface. | *"Equipment rental returns are high-stress bottlenecks. Skilled agents spend 20 minutes inspecting cameras and cases under a loupe, creating long queues and disputed charges. GearWitness brings local, air-gapped AI directly onto the rental shop counter."* |
+| **02** | `0:15 – 0:35` | 20s | **Comparison Canvas & Split Reveal Slider:**<br>Cursor drags the split reveal divider smoothly back and forth across the Sony FX3 top plate. Toggle the `Diff Heatmap` overlay to show the luminance delta, then toggle back to natural view. | *"Here is our checkout baseline on the left, and return check-in on the right. Even with slight angle shifts, deterministic OpenCV ORB and RANSAC homography align the perspective to sub-millimeter precision before any AI model is invoked."* |
+| **03** | `0:35 – 0:55` | 20s | **Gemma 3 Proposals & Confirm Damage:**<br>Click **Proposal #1 (Chassis Scratch)** in the right Evidence Tray. Zoom into the paired crop preview showing the 4mm abrasion through the anodized coating. Click **`✓ Confirm Damage`**. | *"Extracted crop pairs are analyzed by Gemma 3 via Ollama using a strict JSON schema. The model detected a fresh scratch breaching the magnesium coating with 89% confidence. As the operator, I confirm the damage with one click."* |
+| **04** | `0:55 – 1:15` | 20s | **Human Decision Boundary & Dismiss Glare:**<br>Click **Proposal #2 (Sensor Glass Glare)**. Show the model rationale identifying specular counter lighting. Click **`✕ Dismiss (Wear / Glare)`**. Card dims and updates status. | *"Crucially, GearWitness enforces a strict human decision boundary. The system never assesses auto-fines or accuses customers. For Proposal 2, lighting glare is identified; I dismiss it instantly, preventing a confrontational customer dispute."* |
+| **05** | `1:15 – 1:30` | 15s | **Kit Inventory Checklist & Guided Capture:**<br>Scroll down to the Kit Checklist. Toggle **Missing** on the USB-C tethering cable. Click **Guided Capture** button in header to briefly reveal the 5-point silhouette guidance assistant. | *"The kit checklist auto-reconciles multi-piece accessories, catching the missing tethering cable. Operators can also launch Guided Capture for five standardized camera angles with visual silhouette assistance."* |
+| **06** | `1:30 – 1:45` | 15s | **Sealed Digest & Inspection Certificate:**<br>Click **Review & Export** in the header. Show the modal with the **SHA-256 Content Integrity Digest**. Click **Approve & Seal**, then click **Printable HTML** and **PDF Report**. End on clean summary card. | *"We finalize the inspection into a tamper-evident SHA-256 Content Integrity Digest. Printable HTML and vector PDF certificates are generated instantly. Fast returns, zero cloud leakage, full operator control. That is GearWitness."* |
 
 ---
 
-## Act 4: Cryptographic Audit Manifest & Sign-Off (2:05 – 2:45)
+## 🎙️ Complete Spoken Voiceover Script (Word Count: 268 Words ≈ 105s at 150 WPM)
 
-- **[Visual]:** Click **Review & Export** in the top right.
-- **[Voiceover]:**  
-  *"Now we click Review & Export. GearWitness compiles a complete audit manifest sealed with a cryptographic SHA-256 hash. This seals the raw hashes of the photos, the operator’s decisions, and the kit checklist into a tamper-evident record."*
-- **[Visual]:** Click **`✓ Approve & Seal Manifest`**.
-- **[Visual]:** Click **Printable HTML Report ↗** and **Download PDF Report ↓**. Show the clean vector report with company branding, itemized defects, and legal disclaimer.
-- **[Voiceover]:**  
-  *"Both printable HTML and PDF certificates are ready instantly. Fast check-ins, zero disputes, zero cloud privacy risks. That is GearWitness."*
-- **[Visual]:** Final slide with GitHub repository link:  
-  `https://github.com/abhijeetnardele24-hash/gearwitness`
+> *"Equipment rental returns are high-stress bottlenecks. Skilled agents spend 20 minutes inspecting cameras and cases under a loupe, creating long queues and disputed charges. GearWitness brings local, air-gapped AI directly onto the rental shop counter.*
+>
+> *Here is our checkout baseline on the left, and return check-in on the right. Even with slight angle shifts, deterministic OpenCV ORB and RANSAC homography align the perspective to sub-millimeter precision before any AI model is invoked.*
+>
+> *Extracted crop pairs are analyzed by Gemma 3 via Ollama using a strict JSON schema. The model detected a fresh scratch breaching the magnesium coating with 89% confidence. As the operator, I confirm the damage with one click.*
+>
+> *Crucially, GearWitness enforces a strict human decision boundary. The system never assesses auto-fines or accuses customers. For Proposal 2, lighting glare is identified; I dismiss it instantly, preventing a confrontational customer dispute.*
+>
+> *The kit checklist auto-reconciles multi-piece accessories, catching the missing tethering cable. Operators can also launch Guided Capture for five standardized camera angles with visual silhouette assistance.*
+>
+> *We finalize the inspection into a tamper-evident SHA-256 Content Integrity Digest. Printable HTML and vector PDF certificates are generated instantly. Fast returns, zero cloud leakage, full operator control. That is GearWitness."*

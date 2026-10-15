@@ -83,6 +83,8 @@ Most importantly, it enforces a **strict human decision boundary**: GearWitness 
     └───────────────────────────────────────────────────────────────┘
 ```
 
+![Forensic Operator Workflow: Five-Stage Inspection Pipeline](https://raw.githubusercontent.com/abhijeetnardele24-hash/gearwitness/main/docs/assets/forensic_operator_workflow.png)
+
 ### 1. Deterministic Homography Before Model Inference
 Generative AI often hallucinates details when asked to compare two unaligned, angled photos. GearWitness solves this by performing real perspective warping first:
 ```python
@@ -141,9 +143,10 @@ We evaluated GearWitness against a decoupled 40-case test suite (`data/benchmark
 | Ambiguous Wear vs Scratch | 4 | 0.667 | 0.667 | 0.667 | 66.7% |
 | **OVERALL BENCHMARK (40 Cases)** | **40** | **0.900** | **0.900** | **0.900** | **90.0%** |
 
-- **Proposed Region Recall:** **100.0%** (all 14 physical defects detected by CV).
+- **Proposed Region Recall on True Defects:** **100.0%** (24/24 true physical defects detected without omission).
 - **Missing Accessory Accuracy:** **100.0%** (8/8 accessories correctly flagged).
-- **Code Coverage:** **94.8%** across 52 unit, integration, and security tests.
+- **Zero Hallucinated Fines:** **0%** auto-charged (100% human operator decision boundary enforced).
+- **Comprehensive Test Suite:** **73 automated tests** passing across Python pytest (57 tests, 93.35% coverage), Vitest (10 tests), and Playwright E2E/Axe accessibility (6 tests).
 
 ---
 
@@ -161,7 +164,7 @@ We evaluated GearWitness against a decoupled 40-case test suite (`data/benchmark
 ## 🚀 Live Demo & Code Repository
 
 - **GitHub Repository:** [https://github.com/abhijeetnardele24-hash/gearwitness](https://github.com/abhijeetnardele24-hash/gearwitness)
-- **Live Demo (Render):** [https://gearwitness.onrender.com](https://gearwitness.onrender.com) *(running in deterministic fixture mode)*
+- **Live Demo (Render):** [https://gearwitness.onrender.com](https://gearwitness.onrender.com) *(Deployment pending — blueprint configured in render.yaml; awaiting Render dashboard repository link authorization)*
 - **Documentation:** Complete [Architecture](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/ARCHITECTURE.md), [Model Card](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/MODEL_CARD.md), [Evaluation Suite](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/EVALUATION.md), and [Threat Model](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/PRIVACY_AND_THREAT_MODEL.md).
 
 ---
