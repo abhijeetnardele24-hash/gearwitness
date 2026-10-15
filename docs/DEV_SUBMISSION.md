@@ -180,6 +180,26 @@ The reproducible results recorded in `data/evaluation_metrics.json` are:
 
 ---
 
+## 💵 Why This Can Be a Real Side Hustle
+
+The launch hypothesis is a **$39 one-time workstation license** for solo rental operators, with an optional paid setup service for capture templates and inventory imports. This is a pricing hypothesis, not a revenue claim—we have not yet taken payment.
+
+The economics work because inference runs on hardware the shop already controls. There is no per-image API bill, and a shop does not need to upload customer or production data to a third party. A single prevented missing-accessory dispute can cost more than the proposed license.
+
+---
+
+## 🏆 Meaningful Partner Technology Use
+
+### Best Use of Gemma
+
+`gemma3:4b` is the local multimodal reasoning layer, not a decorative chatbot. It receives the tightly cropped, OpenCV-aligned baseline/return evidence pair and must return a schema-valid condition, severity, confidence, description, and observable rationale. The deployment remains useful in deterministic fixture mode when Ollama is unavailable, while the documented local mode executes real Gemma inference without sending inspection images to a hosted model API.
+
+### Best Use of Render
+
+The public judging demo is deployed from the repository's `render.yaml` Blueprint as a Docker web service. Render builds the React interface and FastAPI service together, checks `/api/v1/health`, and exposes the complete operator-review workflow, image fixtures, crop evidence, manifest JSON, printable HTML, and PDF reports from one URL. The hosted demo labels itself **Deterministic Fixture** because the free service does not claim an Ollama runtime it does not have.
+
+---
+
 ## ⚠️ Accurate Limitations
 
 - **Extreme Perspective Disparities:** If a return photo is captured at an angle greater than 25° off-axis relative to baseline, feature matching can degrade, requiring the operator to switch to side-by-side mode or recapture using Guided Capture.
@@ -199,3 +219,9 @@ The reproducible results recorded in `data/evaluation_metrics.json` are:
 ## 🎯 Conclusion
 
 By grounding local multimodal vision with deterministic OpenCV registration and keeping the human operator firmly in control, GearWitness turns equipment rental check-ins into a fast, transparent, and evidence-backed exchange.
+
+---
+
+## Community Context
+
+The broader DEV community's work on [running multimodal models locally with Ollama](https://dev.to/koolkamalkishor/ollama-multimodal-models-run-vision-ai-locally-2fj3), [privacy-preserving local computer vision](https://dev.to/laythayache/real-time-video-anonymization-at-30-fps-on-a-35-computer-2gkl), and [zero-monthly-cost local AI servers](https://dev.to/samhartley_dev/run-your-own-ai-server-for-0month-with-ollama-5ecg) reinforced the decision to make local inference, transparent degradation, and replaceable open components foundational rather than optional.
