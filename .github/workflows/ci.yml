@@ -132,7 +132,7 @@ jobs:
           # Assert /api/v1/health returns HTTP 200 with valid status
           HEALTH_JSON=$(curl -s http://localhost:8000/api/v1/health)
           echo "Health response: $HEALTH_JSON"
-          echo "$HEALTH_JSON" | grep -q '"status":"ok"'
+          echo "$HEALTH_JSON" | grep -q '"status":"healthy"'
 
           # Assert / returns the built frontend
           FRONTEND_HTML=$(curl -s http://localhost:8000/)
