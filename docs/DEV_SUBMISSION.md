@@ -191,7 +191,7 @@ The reproducible results recorded in `data/evaluation_metrics.json` are:
 ## 🚀 Live Demo & Code Repository
 
 - **GitHub Repository:** [https://github.com/abhijeetnardele24-hash/gearwitness](https://github.com/abhijeetnardele24-hash/gearwitness)
-- **Hosted Demo (Render):** [https://gearwitness.onrender.com](https://gearwitness.onrender.com) *(Deployment pending — blueprint configured in render.yaml; awaiting Render dashboard repository link authorization)*
+- **Hosted Demo (Render):** [https://gearwitness.onrender.com](https://gearwitness.onrender.com) *(Live public deployment; the free instance may need a short cold-start after inactivity.)*
 - **Documentation:** Complete [Architecture](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/ARCHITECTURE.md), [Model Card](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/MODEL_CARD.md), [Evaluation Suite](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/EVALUATION.md), and [Threat Model](https://github.com/abhijeetnardele24-hash/gearwitness/blob/main/docs/PRIVACY_AND_THREAT_MODEL.md).
 
 ---

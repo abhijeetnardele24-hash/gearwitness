@@ -118,11 +118,11 @@ test.describe("GearWitness Complete Forensic Operator Journey", () => {
     await expect(page.locator(".hash-badge")).toHaveText("SHA-256 CONTENT INTEGRITY DIGEST");
     await expect(page.locator("#val-manifest-hash")).toBeVisible();
 
-    // Verify Approve and Seal Manifest
+    // Verify Approve and Finalize Manifest
     const approveBtn = page.locator("#btn-approve-signoff");
     if (await approveBtn.isVisible()) {
       await approveBtn.click();
-      await expect(page.locator(".modal-footer")).toContainText("Manifest Approved & Sealed");
+      await expect(page.locator(".modal-footer")).toContainText("Manifest Approved & Finalized");
     }
 
     // Close modal

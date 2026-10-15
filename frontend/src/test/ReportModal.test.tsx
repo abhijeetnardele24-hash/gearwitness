@@ -81,7 +81,7 @@ describe("ReportModal Component", () => {
       expect(screen.getByText("SHA-256 CONTENT INTEGRITY DIGEST")).toBeInTheDocument();
     });
 
-    const approveBtn = screen.getByRole("button", { name: /Approve & Seal Manifest/i });
+    const approveBtn = screen.getByRole("button", { name: /Approve & Finalize/i });
     fireEvent.click(approveBtn);
 
     await waitFor(() => {

@@ -209,16 +209,16 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                 id="btn-approve-signoff"
               >
                 {isApproving ? (
-                  "Signing Manifest..."
+                  "Finalizing Manifest..."
                 ) : (
                   <>
-                    <FileCheck size={16} className="mr-1" /> Approve & Seal Manifest
+                    <FileCheck size={16} className="mr-1" /> Approve & Finalize
                   </>
                 )}
               </button>
             ) : (
               <span className="badge-pill pill-present font-bold">
-                <CheckCircle2 size={16} className="inline mr-1" /> Manifest Approved & Sealed
+                <CheckCircle2 size={16} className="inline mr-1" /> Manifest Approved & Finalized
               </span>
             )}
           </div>
