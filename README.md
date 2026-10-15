@@ -31,13 +31,13 @@ Equipment rental operations (cameras, cinema packages, pro audio, drones, precis
 
 ## 🔄 Forensic Operator Workflow
 
-![Operator Workflow](docs/assets/workflow_stepper.png)
+![Forensic Operator Workflow: Five-Stage Inspection Pipeline](docs/assets/forensic_operator_workflow.svg)
 
-1. **Guided Capture:** Operator captures 5 standardized angles with visual silhouette assistance.
-2. **Spatial Alignment:** Deterministic OpenCV ORB feature detection aligns return photo to baseline checkout perspective.
-3. **AI Anomaly Proposals:** Gemma 3 analyzes sub-pixel cropped regions and emits structured condition proposals.
-4. **Operator Decision Boundary:** Rental agent reviews every flagged card (`Confirm Damage`, `Dismiss Wear/Glare`, or `Mark Uncertain`).
-5. **Content Integrity Digest:** SHA-256 sealed audit certificate with immutable timestamped evidence log.
+1. **Guided Capture:** Operator captures 5 standardized equipment angles with visual silhouette assistance.
+2. **CV Alignment:** Deterministic OpenCV ORB feature detection and planar homography align return photo to baseline perspective.
+3. **Gemma 3 Analysis:** Local multimodal reasoning analyzes sub-pixel cropped regions and emits structured condition proposals.
+4. **Human Review:** Operator confirms, dismisses, or escalates every proposal with zero automated fines or billing.
+5. **Integrity Report:** Source-linked report sealed with SHA-256 Content Integrity Digest and timestamped audit log.
 
 ---
 

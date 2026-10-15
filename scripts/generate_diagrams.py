@@ -126,58 +126,6 @@ def make_architecture_diagram():
     plt.close()
     print("Saved docs/assets/architecture_diagram.png")
 
-# 3. WORKFLOW STEPPER (docs/assets/workflow_stepper.png)
-def make_workflow_stepper():
-    fig, ax = plt.subplots(figsize=(13, 3.6), facecolor="#f8fafc")
-    ax.set_facecolor("#f8fafc")
-    ax.set_xlim(0, 13)
-    ax.set_ylim(0, 3.6)
-    ax.axis("off")
-
-    steps = [
-        ("01", "Guided Capture", "5 standard camera angles with alignment silhouettes"),
-        ("02", "CV Spatial Alignment", "Sub-pixel ORB registration & difference cropping"),
-        ("03", "AI Condition Proposals", "Gemma 3 multimodal structured anomaly proposals"),
-        ("04", "Operator Decision", "Agent confirms, dismisses, or flags uncertain"),
-        ("05", "Integrity Manifest", "SHA-256 sealed report with immutable audit trail")
-    ]
-    
-    col_w = 2.1
-    gap = 0.35
-    start_x = 0.5
-    
-    for i, (num, title, desc) in enumerate(steps):
-        x = start_x + i * (col_w + gap)
-        y = 0.4
-        
-        # Step card
-        rect = patches.FancyBboxPatch((x, y), col_w, 2.5, boxstyle="round,pad=0.08,rounding_size=0.12",
-                                      facecolor="#ffffff", edgecolor="#0d9488" if i == 3 else "#cbd5e1",
-                                      linewidth=1.8 if i == 3 else 1.2, zorder=2)
-        ax.add_patch(rect)
-        
-        # Number badge
-        circle = patches.Circle((x + 0.35, y + 2.05), 0.22, facecolor="#0d9488" if i == 3 else "#334155", zorder=3)
-        ax.add_patch(circle)
-        ax.text(x + 0.35, y + 2.05, num, ha="center", va="center", fontsize=8.5, fontweight="bold", color="#ffffff", zorder=4)
-        
-        # Title
-        ax.text(x + 0.7, y + 2.05, title, ha="left", va="center", fontsize=9.5, fontweight="bold", color="#0f172a", zorder=3)
-        
-        # Description
-        ax.text(x + 0.15, y + 1.1, desc, ha="left", va="top", fontsize=8.0, color="#475569", wrap=True, zorder=3)
-        
-        # Connector
-        if i < 4:
-            arrow_props = dict(arrowstyle="->,head_width=0.3,head_length=0.4", color="#94a3b8", lw=1.5, zorder=4)
-            ax.annotate("", xy=(x + col_w + gap, y + 1.25), xytext=(x + col_w, y + 1.25), arrowprops=arrow_props)
-            
-    plt.suptitle("GearWitness Forensic Operator Workflow", fontsize=13, fontweight="bold", color="#0f172a", y=0.96)
-    plt.savefig("docs/assets/workflow_stepper.png", dpi=200, bbox_inches="tight")
-    plt.close()
-    print("Saved docs/assets/workflow_stepper.png")
-
 if __name__ == "__main__":
     make_eval_chart()
     make_architecture_diagram()
-    make_workflow_stepper()

@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 440" width="1600" height="440">
+  <defs>
+    <!-- Background Canvas Gradients -->
+    <linearGradient id="bg-canvas" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0b1120"/>
+    </linearGradient>
+
+    <!-- Card Background Gradient -->
+    <linearGradient id="card-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162238"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Card Highlight Borders -->
+    <linearGradient id="border-card-default" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <linearGradient id="border-card-human" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#b45309" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <linearGradient id="border-card-integrity" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- Connector Arrow Gradient -->
+    <linearGradient id="arrow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+
+    <filter id="glow-teal" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <style>
+      .title-kicker { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; fill: #14b8a6; }
+      .title-main { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #f8fafc; letter-spacing: -0.3px; }
+      .stage-num { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "SF Mono", Menlo, monospace; font-size: 11px; font-weight: 800; }
+      .stage-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #f8fafc; letter-spacing: -0.2px; }
+      .stage-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11.5px; font-weight: 600; }
+      .bullet-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11.5px; font-weight: 400; fill: #94a3b8; line-height: 1.4; }
+      .bullet-dot { fill: #475569; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1600" height="440" rx="16" fill="url(#bg-canvas)"/>
+  <rect width="1600" height="440" rx="16" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Subtle Blueprint Grid Accent -->
+  <g opacity="0.06" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="80" x2="1600" y2="80"/>
+    <line x1="0" y1="400" x2="1600" y2="400"/>
+    <line x1="320" y1="80" x2="320" y2="400"/>
+    <line x1="640" y1="80" x2="640" y2="400"/>
+    <line x1="960" y1="80" x2="960" y2="400"/>
+    <line x1="1280" y1="80" x2="1280" y2="400"/>
+  </g>
+
+  <!-- ==================== HEADER AREA ==================== -->
+  <g transform="translate(50, 42)">
+    <text x="0" y="0" class="title-kicker">Forensic Operator Workflow</text>
+    <text x="0" y="24" class="title-main">End-to-End Assistive Return Inspection Pipeline</text>
+  </g>
+
+  <!-- Header Status Pill -->
+  <g transform="translate(1330, 32)">
+    <rect width="220" height="28" rx="14" fill="#132338" stroke="#0d9488" stroke-width="1"/>
+    <circle cx="16" cy="14" r="4" fill="#14b8a6"/>
+    <text x="28" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#ccfbf1">STRICT HUMAN BOUNDARY</text>
+  </g>
+
+  <!-- ==================== STAGE 1: GUIDED CAPTURE ==================== -->
+  <!-- Card X: 50, Width: 264, Height: 300 -->
+  <g transform="translate(50, 95)" filter="url(#card-shadow)">
+    <rect width="264" height="305" rx="14" fill="url(#card-grad)" stroke="url(#border-card-default)" stroke-width="1.2"/>
+    
+    <!-- Top Pill & Icon Bar -->
+    <g transform="translate(18, 18)">
+      <rect width="36" height="22" rx="6" fill="#0f766e" opacity="0.4"/>
+      <text x="18" y="15" text-anchor="middle" class="stage-num" fill="#2dd4bf">01</text>
+      
+      <!-- Lucide Camera Icon -->
+      <g transform="translate(196, -2)" stroke="#14b8a6" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+        <circle cx="12" cy="13" r="3"/>
+      </g>
+    </g>
+
+    <!-- Stage Titles -->
+    <text x="18" y="74" class="stage-title">Guided Capture</text>
+    <text x="18" y="93" class="stage-sub" fill="#2dd4bf">5 Standardized Angles</text>
+
+    <!-- Divider Line -->
+    <line x1="18" y1="108" x2="246" y2="108" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Content Items -->
+    <g transform="translate(18, 128)">
+      <!-- Bullet 1 -->
+      <circle cx="5" cy="5" r="2.5" fill="#14b8a6"/>
+      <text x="16" y="9" class="bullet-text">Front, back, top, mount, &amp;</text>
+      <text x="16" y="25" class="bullet-text">accessory case viewports</text>
+
+      <!-- Bullet 2 -->
+      <circle cx="5" cy="47" r="2.5" fill="#14b8a6"/>
+      <text x="16" y="51" class="bullet-text">Visual silhouette overlays</text>
+      <text x="16" y="67" class="bullet-text">assist operator alignment</text>
+
+      <!-- Bullet 3 -->
+      <circle cx="5" cy="89" r="2.5" fill="#14b8a6"/>
+      <text x="16" y="93" class="bullet-text">Camera capture or direct</text>
+      <text x="16" y="109" class="bullet-text">drag-and-drop file ingest</text>
+
+      <!-- Bullet 4 -->
+      <circle cx="5" cy="131" r="2.5" fill="#14b8a6"/>
+      <text x="16" y="135" class="bullet-text">Automatic EXIF coordinate</text>
+      <text x="16" y="151" class="bullet-text">&amp; serial metadata stripping</text>
+    </g>
+  </g>
+
+  <!-- Connector Arrow 1 -> 2 -->
+  <g transform="translate(322, 238)">
+    <line x1="0" y1="0" x2="32" y2="0" stroke="url(#arrow-grad)" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="30,-5 40,0 30,5" fill="#14b8a6"/>
+  </g>
+
+  <!-- ==================== STAGE 2: CV ALIGNMENT ==================== -->
+  <!-- Card X: 370, Width: 264, Height: 300 -->
+  <g transform="translate(370, 95)" filter="url(#card-shadow)">
+    <rect width="264" height="305" rx="14" fill="url(#card-grad)" stroke="url(#border-card-default)" stroke-width="1.2"/>
+    
+    <!-- Top Pill & Icon Bar -->
+    <g transform="translate(18, 18)">
+      <rect width="36" height="22" rx="6" fill="#0369a1" opacity="0.4"/>
+      <text x="18" y="15" text-anchor="middle" class="stage-num" fill="#38bdf8">02</text>
+      
+      <!-- Lucide Layers / Align Icon -->
+      <g transform="translate(196, -2)" stroke="#38bdf8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
+      </g>
+    </g>
+
+    <!-- Stage Titles -->
+    <text x="18" y="74" class="stage-title">CV Alignment</text>
+    <text x="18" y="93" class="stage-sub" fill="#38bdf8">OpenCV Registration</text>
+
+    <!-- Divider Line -->
+    <line x1="18" y1="108" x2="246" y2="108" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Content Items -->
+    <g transform="translate(18, 128)">
+      <!-- Bullet 1 -->
+      <circle cx="5" cy="5" r="2.5" fill="#38bdf8"/>
+      <text x="16" y="9" class="bullet-text">ORB keypoint detection &amp;</text>
+      <text x="16" y="25" class="bullet-text">descriptor feature matching</text>
+
+      <!-- Bullet 2 -->
+      <circle cx="5" cy="47" r="2.5" fill="#38bdf8"/>
+      <text x="16" y="51" class="bullet-text">RANSAC homography</text>
+      <text x="16" y="67" class="bullet-text">planar perspective warp</text>
+
+      <!-- Bullet 3 -->
+      <circle cx="5" cy="89" r="2.5" fill="#38bdf8"/>
+      <text x="16" y="93" class="bullet-text">Bilateral filtering and</text>
+      <text x="16" y="109" class="bullet-text">luminance differencing</text>
+
+      <!-- Bullet 4 -->
+      <circle cx="5" cy="131" r="2.5" fill="#38bdf8"/>
+      <text x="16" y="135" class="bullet-text">Sub-pixel anomaly crop</text>
+      <text x="16" y="151" class="bullet-text">pair extraction (14.2 ms)</text>
+    </g>
+  </g>
+
+  <!-- Connector Arrow 2 -> 3 -->
+  <g transform="translate(642, 238)">
+    <line x1="0" y1="0" x2="32" y2="0" stroke="url(#arrow-grad)" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="30,-5 40,0 30,5" fill="#14b8a6"/>
+  </g>
+
+  <!-- ==================== STAGE 3: GEMMA 3 ANALYSIS ==================== -->
+  <!-- Card X: 690, Width: 264, Height: 300 -->
+  <g transform="translate(690, 95)" filter="url(#card-shadow)">
+    <rect width="264" height="305" rx="14" fill="url(#card-grad)" stroke="url(#border-card-default)" stroke-width="1.2"/>
+    
+    <!-- Top Pill & Icon Bar -->
+    <g transform="translate(18, 18)">
+      <rect width="36" height="22" rx="6" fill="#4338ca" opacity="0.4"/>
+      <text x="18" y="15" text-anchor="middle" class="stage-num" fill="#818cf8">03</text>
+      
+      <!-- Lucide Sparkles / AI Vision Icon -->
+      <g transform="translate(196, -2)" stroke="#818cf8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v3m0 12v3M3 12h3m12 0h3"/>
+        <path d="M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6l2.1-2.1"/>
+        <circle cx="12" cy="12" r="3.5"/>
+      </g>
+    </g>
+
+    <!-- Stage Titles -->
+    <text x="18" y="74" class="stage-title">Gemma 3 Analysis</text>
+    <text x="18" y="93" class="stage-sub" fill="#818cf8">Local Multimodal Reasoning</text>
+
+    <!-- Divider Line -->
+    <line x1="18" y1="108" x2="246" y2="108" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Content Items -->
+    <g transform="translate(18, 128)">
+      <!-- Bullet 1 -->
+      <circle cx="5" cy="5" r="2.5" fill="#818cf8"/>
+      <text x="16" y="9" class="bullet-text">Air-gapped local inference</text>
+      <text x="16" y="25" class="bullet-text">via Ollama (gemma3:4b)</text>
+
+      <!-- Bullet 2 -->
+      <circle cx="5" cy="47" r="2.5" fill="#818cf8"/>
+      <text x="16" y="51" class="bullet-text">Strict Pydantic JSON schema</text>
+      <text x="16" y="67" class="bullet-text">contract enforcement</text>
+
+      <!-- Bullet 3 -->
+      <circle cx="5" cy="89" r="2.5" fill="#818cf8"/>
+      <text x="16" y="93" class="bullet-text">Distinguishes true damage</text>
+      <text x="16" y="109" class="bullet-text">from glare and normal wear</text>
+
+      <!-- Bullet 4 -->
+      <circle cx="5" cy="131" r="2.5" fill="#818cf8"/>
+      <text x="16" y="135" class="bullet-text">Itemized missing kit accessory</text>
+      <text x="16" y="151" class="bullet-text">presence classification</text>
+    </g>
+  </g>
+
+  <!-- Connector Arrow 3 -> 4 -->
+  <g transform="translate(962, 238)">
+    <line x1="0" y1="0" x2="32" y2="0" stroke="url(#arrow-grad)" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="30,-5 40,0 30,5" fill="#14b8a6"/>
+  </g>
+
+  <!-- ==================== STAGE 4: HUMAN REVIEW (HERO FOCUS) ==================== -->
+  <!-- Card X: 1010, Width: 264, Height: 300 -->
+  <g transform="translate(1010, 95)" filter="url(#card-shadow)">
+    <!-- Highlighted Amber Border for Human Boundary -->
+    <rect width="264" height="305" rx="14" fill="url(#card-grad)" stroke="url(#border-card-human)" stroke-width="1.8"/>
+    
+    <!-- Top Pill & Icon Bar -->
+    <g transform="translate(18, 18)">
+      <rect width="36" height="22" rx="6" fill="#b45309" opacity="0.4"/>
+      <text x="18" y="15" text-anchor="middle" class="stage-num" fill="#fbbf24">04</text>
+      
+      <!-- Lucide User Check / Decision Icon -->
+      <g transform="translate(196, -2)" stroke="#fbbf24" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <polyline points="16 11 18 13 22 9"/>
+      </g>
+    </g>
+
+    <!-- Stage Titles -->
+    <text x="18" y="74" class="stage-title">Human Review</text>
+    <text x="18" y="93" class="stage-sub" fill="#fbbf24">Operator Decision Boundary</text>
+
+    <!-- Divider Line -->
+    <line x1="18" y1="108" x2="246" y2="108" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Content Items -->
+    <g transform="translate(18, 128)">
+      <!-- Bullet 1 -->
+      <circle cx="5" cy="5" r="2.5" fill="#fbbf24"/>
+      <text x="16" y="9" class="bullet-text" font-weight="600" fill="#f8fafc">Confirm, Dismiss, or</text>
+      <text x="16" y="25" class="bullet-text" font-weight="600" fill="#f8fafc">Escalate every proposal</text>
+
+      <!-- Bullet 2 -->
+      <circle cx="5" cy="47" r="2.5" fill="#fbbf24"/>
+      <text x="16" y="51" class="bullet-text">Zero automated fines,</text>
+      <text x="16" y="67" class="bullet-text">penalties, or client charges</text>
+
+      <!-- Bullet 3 -->
+      <circle cx="5" cy="89" r="2.5" fill="#fbbf24"/>
+      <text x="16" y="93" class="bullet-text">Operator notes appended</text>
+      <text x="16" y="109" class="bullet-text">directly to decision cards</text>
+
+      <!-- Bullet 4 -->
+      <circle cx="5" cy="131" r="2.5" fill="#fbbf24"/>
+      <text x="16" y="135" class="bullet-text">Uncertain flags routed to</text>
+      <text x="16" y="151" class="bullet-text">senior shop mechanic triage</text>
+    </g>
+  </g>
+
+  <!-- Connector Arrow 4 -> 5 -->
+  <g transform="translate(1282, 238)">
+    <line x1="0" y1="0" x2="32" y2="0" stroke="url(#arrow-grad)" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="30,-5 40,0 30,5" fill="#14b8a6"/>
+  </g>
+
+  <!-- ==================== STAGE 5: INTEGRITY REPORT ==================== -->
+  <!-- Card X: 1330, Width: 264, Height: 300 -->
+  <g transform="translate(1330, 95)" filter="url(#card-shadow)">
+    <rect width="264" height="305" rx="14" fill="url(#card-grad)" stroke="url(#border-card-integrity)" stroke-width="1.4"/>
+    
+    <!-- Top Pill & Icon Bar -->
+    <g transform="translate(18, 18)">
+      <rect width="36" height="22" rx="6" fill="#065f46" opacity="0.4"/>
+      <text x="18" y="15" text-anchor="middle" class="stage-num" fill="#34d399">05</text>
+      
+      <!-- Lucide File Check / Digest Icon -->
+      <g transform="translate(196, -2)" stroke="#34d399" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <polyline points="9 15 11 17 15 13"/>
+      </g>
+    </g>
+
+    <!-- Stage Titles -->
+    <text x="18" y="74" class="stage-title">Integrity Report</text>
+    <text x="18" y="93" class="stage-sub" fill="#34d399">SHA-256 Content Digest</text>
+
+    <!-- Divider Line -->
+    <line x1="18" y1="108" x2="246" y2="108" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Content Items -->
+    <g transform="translate(18, 128)">
+      <!-- Bullet 1 -->
+      <circle cx="5" cy="5" r="2.5" fill="#34d399"/>
+      <text x="16" y="9" class="bullet-text">Content Integrity Digest</text>
+      <text x="16" y="25" class="bullet-text">computed over raw media</text>
+
+      <!-- Bullet 2 -->
+      <circle cx="5" cy="47" r="2.5" fill="#34d399"/>
+      <text x="16" y="51" class="bullet-text">Source-linked evidence trail</text>
+      <text x="16" y="67" class="bullet-text">with timestamped actions</text>
+
+      <!-- Bullet 3 -->
+      <circle cx="5" cy="89" r="2.5" fill="#34d399"/>
+      <text x="16" y="93" class="bullet-text">Standalone printable HTML</text>
+      <text x="16" y="109" class="bullet-text">&amp; ReportLab PDF exports</text>
+
+      <!-- Bullet 4 -->
+      <circle cx="5" cy="131" r="2.5" fill="#34d399"/>
+      <text x="16" y="135" class="bullet-text">Persistent SQLite logging</text>
+      <text x="16" y="151" class="bullet-text">with verified hash manifest</text>
+    </g>
+  </g>
+</svg>
